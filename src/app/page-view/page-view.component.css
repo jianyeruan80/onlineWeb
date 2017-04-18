@@ -1,0 +1,56 @@
+:host >>> .pagination {
+      list-style: none;
+      display: inline-block;
+      padding: 0;margin-top:5px;line-height:45px; 
+  }
+ :host >>>.pagination li {
+      display: inline;
+      text-align: center;
+    }
+  :host >>>  .pagination a {
+      float: left;
+      display: block;
+      font-size: 14px;
+      text-decoration: none;
+      padding: 5px 12px;
+      color: #fff;
+      margin-left: -1px;
+      border: 1px solid transparent;
+      line-height: 1.5;
+    }
+    :host >>>.pagination a.active {
+      cursor: default;
+    }
+   :host >>> .pagination a:active {
+      outline: none;
+    }
+
+   :host >>> .modal-1 li:first-child a {
+      -moz-border-radius: 6px 0 0 6px;
+      -webkit-border-radius: 6px;
+      border-radius: 6px 0 0 6px;
+    }
+    :host >>>.modal-1 li:last-child a {
+      -moz-border-radius: 0 6px 6px 0;
+      -webkit-border-radius: 0;
+      border-radius: 0 6px 6px 0;
+    }
+   :host >>> .modal-1 a {
+      border-color: #ddd;
+      color: #000;
+      font-weight:500;
+      background: #fff;
+    }
+    :host >>> .modal-1 a:hover {
+      background: #eee;
+    }
+    :host >>> .modal-1 a:active, .modal-1 .active {
+      border-color: #4285F4  !important;
+      background: #5DBA9D  !important;
+      color: #fff  !important;
+    }
+    :host >>> .active {
+   
+      background: #5DBA9D  !important;
+      color: #fff  !important;
+    }
