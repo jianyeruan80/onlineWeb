@@ -48,7 +48,7 @@
 					   <div class="wrapTable">
 						     <div class="row" *ngFor="let item of customers;let i=index"  (click)="openCustomer(item)">
 									      <div style="flex:0 0 50px;text-align:center">
-									       &nbsp;&nbsp;<b>{{i+1+config["pageOnCount"]*(config["currentPage"]-1)}}</b>
+									       &nbsp;&nbsp;<b>{{i+1+config["pageOnCount"]*(config["page"]-1)}}</b>
 									      </div>
 									      <div class="cell">
 									        {{item.account}}

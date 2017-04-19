@@ -47,9 +47,9 @@ this.myService.upload("/uploadPic",file,name).subscribe(
 uploadPicture(){
       this.uploadPic.nativeElement.click();
   }
-  save(): void{
+  save(){
   	
-  		this.myService.service("/stores","put",this.store).subscribe(
+  		this.myService.service("/stores/"+this.store["_id"],"put",this.store).subscribe(
                data=>{this.store=(data || this.store);this.appGlobal.storeInfo=this.store;}
                
                );

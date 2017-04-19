@@ -40,7 +40,14 @@ export class CustomerComponent implements OnInit {
   }
     ngOnInit(): void {
         this.search(1);
-
+         this.searchInfo.valueChanges
+                 .debounceTime(600)
+                 .distinctUntilChanged()
+                 .map(i => i).subscribe(val => {
+                     this.config["searchData"]["searchInfo"]=val;
+                     
+                     this.search(1);
+         });
     }
 
     openCustomer(item){
