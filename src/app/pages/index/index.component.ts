@@ -25,9 +25,9 @@ testList:any=[];
 
   ngOnInit() {
     
-     if(!this.appGlobal.userInfo["accessToken"]){
+    // if(!this.appGlobal.userInfo["accessToken"]){
      // this.router.navigate([this.storeService.get("QRC")]);
-     }
+    // }
      
      //console.log(this.storeService.get("QRCURL"));
   	//this.router.navigate(["about",{}]);

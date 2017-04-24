@@ -5,14 +5,12 @@
     <img src="{{appGlobal.picUrl}}{{appGlobal.storeInfo.logo}}"  class="logo"/>
        <h1>{{appGlobal.storeInfo.name}}</h1>
        <div class="login-row">
-           <input class="input" type="text" AUTOCOMPLETE="off" [(ngModel)]=loginForm.userName  ngModel name="userName" required><label>Username</label> 
+           <input class="input" type="text" AUTOCOMPLETE="off" [(ngModel)]=loginForm.userName   name="userName" required><label>Username</label> 
        </div>
        <div class="login-row">
                 <input class="input" type="password" AUTOCOMPLETE="off" [(ngModel)]=loginForm.password   name="password" required> <label>Password</label>
        </div>
-  <!--       <div class="row">
-                <input class="input" type="text" AUTOCOMPLETE="off" [(ngModel)]=loginForm.merchantId  name="merchantId" required> <label>MerchangID</label>
-       </div> -->
+
        <div>
        <input type="submit" class="submit" value="Login"  [disabled]="!f.valid"/>
        </div> 

@@ -9,10 +9,13 @@ import { StaffComponent } from './pages/staff/staff.component';
 import { CustomerComponent } from './pages/customer/customer.component';
 import { LicenseComponent } from './pages/license/license.component';
 import { SettingComponent } from './pages/setting/setting.component';
+import { ItemsComponent } from './pages/items/items.component';
+import { MenusComponent } from './pages/menus/menus.component';
+import { CondimentsComponent } from './pages/condiments/condiments.component';
 import { PageViewComponent } from './page-view/page-view.component';
 
 export const routes: Routes = [
- { path: '', redirectTo: 'index/customer', pathMatch: 'full' },
+ { path: '', redirectTo: 'index/items', pathMatch: 'full' },
  { path: 'setting', component: SettingComponent },
   { path: ':login', component: LoginComponent },
 /*{path: '/setting/...', name: 'Home', component: HomeComponent}
@@ -38,6 +41,9 @@ export const routes: Routes = [
       { path: 'staff', component: StaffComponent},
       { path: 'customer', component:CustomerComponent},
       { path: 'license', component:LicenseComponent},
+      { path: 'items', component:ItemsComponent},
+      { path: 'menus', component:MenusComponent},
+      { path: 'condiments', component:CondimentsComponent}
 
         
     ]}

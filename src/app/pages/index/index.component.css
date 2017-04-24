@@ -3,22 +3,22 @@
 	border-bottom:solid red 1px;
 }
 */.nav-header{
-background-color:#5DBA9D;line-height:45px;height:45px;font-size:1.5rem;padding:0 5px;
+background-color:#5DBA9D;line-height:40px;height:40px;font-size:1.5rem;padding:0 5px;
 color:#fff;
 }
 .nav-header i{
-	float: right;line-height:45px;font-size:1.3rem;
+	float: right;line-height:40px;font-size:1.3rem;
 }
 
 .nav-content{
-line-height:45px;height:45px;font-size:1.3rem;padding:0 5px 0 10px;
+line-height:40px;height:40px;font-size:1.3rem;padding:0 5px 0 10px;
 display:block;
 }
 .nav-content:nth-of-type(odd){
 background:#eee !important;
 }
 .nav-content i{
-	float: right;line-height:45px;
+	float: right;line-height:40px;
 }
 .radio-hide{
 	display:none;

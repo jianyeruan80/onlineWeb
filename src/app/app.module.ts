@@ -32,9 +32,14 @@ import { CustomerComponent } from './pages/customer/customer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LicenseComponent } from './pages/license/license.component';
 import { SettingComponent } from './pages/setting/setting.component';
-
+import { MenusComponent } from './pages/menus/menus.component';
 import { PageViewComponent } from './page-view/page-view.component';
-
+import { PagesComponent } from './pages/pages.component';
+import { GroupComponent } from './pages/group/group.component';
+import { CategoryComponent } from './pages/category/category.component';
+import { CondimentsComponent } from './pages/condiments/condiments.component';
+import { ItemsComponent } from './pages/items/items.component';
+import { TreeModule } from 'angular-tree-component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +58,13 @@ import { PageViewComponent } from './page-view/page-view.component';
     CustomerComponent,
     LicenseComponent,
     SettingComponent,
-    PageViewComponent
+    PageViewComponent,
+    PagesComponent,
+    GroupComponent,
+    CategoryComponent,
+    CondimentsComponent,
+    MenusComponent,
+    ItemsComponent
     
     
   ],
@@ -62,6 +73,7 @@ import { PageViewComponent } from './page-view/page-view.component';
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
+    TreeModule,
    /*RouterModule.forRoot(routes,{ useHash: true }),*/
     RouterModule.forRoot(routes), // <-- installs Router routes, components and servicesRouterModule.forRoot(ROUTES ,{ useHash: true }),]
     LocalStorageModule.withConfig({
