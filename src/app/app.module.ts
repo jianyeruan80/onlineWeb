@@ -39,7 +39,7 @@ import { GroupComponent } from './pages/group/group.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { CondimentsComponent } from './pages/condiments/condiments.component';
 import { ItemsComponent } from './pages/items/items.component';
-import { TreeModule } from 'angular-tree-component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +73,7 @@ import { TreeModule } from 'angular-tree-component';
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
-    TreeModule,
+    
    /*RouterModule.forRoot(routes,{ useHash: true }),*/
     RouterModule.forRoot(routes), // <-- installs Router routes, components and servicesRouterModule.forRoot(ROUTES ,{ useHash: true }),]
     LocalStorageModule.withConfig({

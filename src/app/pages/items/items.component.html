@@ -37,7 +37,7 @@
 							</div>
 							<div style="flex:0 1 25%;height:55px;" >
 										<div class="row">
-							              <input type="Number" step="1"  placeholder=" " [(ngModel)]=category.customerOptions  name="customerOptions" />
+							              <input  placeholder=" " [ngModel]=showOption  name="customerOptions"  (click)="modal=true;option={};isSelectOp=-1;"  />
 						                  <label>customerOptions </label> 
 										</div>
 							</div>
@@ -50,10 +50,237 @@
 					
 				
 				
-<div  class="flexy ofy flex-row w100" *ngIf="!!category['_id']"  style="justify-content: flex-start;align-content:flex-start;position:relative;">
-	<div>ADD</div>
-				 	<!-- <form #v="ngForm"
-          (ngSubmit)="save()" style="margin-top:20px" class="w100">
+	<div  class="flexy ofy flex-row w100" *ngIf="!!category['_id']"  style="justify-content: flex-start;align-content:flex-start;position:relative;">
+		 
+		 <div (click)="addItem()">ADD</div>
+			
+	</div>
+		
+</div>
+</div>
+
+<!---Category Option  -->
+<div class="mask" *ngIf="!!modal || !!modalItem">
+</div>
+<div class="mask-flex flex-center" *ngIf="!!modal"> 
+<div  class="psr w90 h90 bg-white bdr8 flex-row" >
+<i class="fa fa-times mask-close"  (click)="modal=false" aria-hidden="true"></i>
+	<div style="flex:0 0 220px;" class="h100 bc flex-nocolumn">
+			  <div class="px40 flex-row bg-blue">
+			  		<div class="flex ta-center"><b>Options</b></div>
+			  		<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px"  (click)="isSelectOpGroup=-1;selectOpGroup({})"></div>
+              </div>
+			 <div class="flexy ofy row-child" *ngIf="!!category['customerOptions']">
+					  <div [ngClass]="{'px35 flex-row':true,'row-select':isSelectOpGroup==i}" *ngFor="let item of category['customerOptions'];let i=index;" (click)="isSelectOpGroup=i;selectOpGroup(item)" >
+					  			<div class="flex">{{item.group}}</div>
+					  		<div class="fa fa-trash fa-1x px35 ac" aria-hidden="true" (click)="deleteOpGroup(item)" 
+					  		style="padding:0 10px 0 5px"></div>
+					  </div>
+			
+			 </div>	  
+	</div>
+		<div class="flex flex-column" >
+					<form  #f="ngForm"
+          (ngSubmit)="saveOpGroup()" style="margin-top:10px;position:relative;">
+           <input  *ngIf="!showOpGroup" [disabled]="!f.valid"	 type="submit" class="submit"
+					   style="position:absolute;right:10px;bottom:10px;" value="Save"/>
+					  <fieldset>
+					    <legend  align="right" (click)="showOpGroup=!showOpGroup"><b>Add/Edit Options</b></legend>
+					    <div  class="w100 flex-row" *ngIf="!showOpGroup"  >
+					    		 
+						   <div style="flex:0 1 25%;height:55px;" >
+										<div class="row">
+							              <input placeholder=" " [(ngModel)]=optionGroup.group  required="" name="group" />
+						                  <label>Group Name</label> 
+										</div>
+							</div>
+							<div style="flex:0 1 25%;height:55px;" >
+										<div class="row">
+							              <input type="Number" step="1" placeholder=" " [(ngModel)]=optionGroup.minimun  name="minimun" />
+						                  <label>Minimun</label> 
+										</div>
+							</div>
+							<div style="flex:0 1 25%;height:55px;" >
+										<div class="row">
+							              <input type="Number" step="1"  placeholder=" " [(ngModel)]=optionGroup.maximun  name="maximun" />
+						                  <label>Maximun </label> 
+										</div>
+							</div>
+
+					    </div>
+					  </fieldset>
+
+					</form>
+
+					
+	<div  class="flexy ofy flex-row w100" *ngIf="!!optionGroup['_id']"  style="justify-content: flex-start;align-content:flex-start;position:relative;">
+				 	<form #v="ngForm"
+          (ngSubmit)="saveOpGroup()" style="margin-top:20px" class="w100">
+					  <fieldset>
+					    <legend  align="right"  (click)="showOp=!showOp" class="px35" style="font-size:1.5rem;">
+					     <b>
+					      <li class="fa fa-plus" (click)="addOp()" aria-hidden="true">(Add)</li>
+					      <span style="padding:0 5px;">|</span>
+					      <li class="fa fa-pencil" (click)="saveOpGroup()" aria-hidden="true">(Save)</li></b>
+					      </legend>
+					      <div  class="w100 flex-row" *ngFor="let item of optionGroup['options'];let i=index;">
+						    	<div style="flex:0 0 30px;height:55px;" (click)="deleteOp(item)">
+											<div class="row">
+								              
+							                  <label><i class="fa fa-trash"  style="color:#AD1457" aria-hidden="true"></i></label> 
+											</div>
+								</div>	 
+							   <div style="flex:0 1 25%;height:55px;">
+											<div class="row">
+								              <input placeholder=" " [(ngModel)]=item.name  required="" name="a{{i}}" />
+							                  <label>Condiment Name</label> 
+											</div>
+								</div>
+								<div style="flex:0 1 25%;height:55px;">
+											<div class="row">
+								              <input placeholder=" " type="Number" [(ngModel)]=item.price  step="0.01" required="" name="b{{i}}" />
+							                  <label>price</label> 
+											</div>
+								</div>
+								<div style="flex:0 1 25%;height:55px;">
+											<div class="row">
+								              <input placeholder=" " [(ngModel)]=item.picture  name="c{{i}}" />
+							                  <label>picture</label> 
+											</div>
+								</div>
+								<div style="flex:1;height:55px;">
+											<div class="row">
+								              <input placeholder=" " [(ngModel)]=item.order  name="d{{i}}" />
+							                  <label>order</label> 
+											</div>
+								</div>
+							
+					    </div>
+
+					      <div  class="w100 flex-row" *ngFor="let item of options;let i=index;">
+						    	<div style="flex:0 0 30px;height:55px;" (click)="deleteOp(i)">
+											<div class="row">
+								              
+							                  <label><i class="fa fa-trash"  style="color:#AD1457" aria-hidden="true"></i></label> 
+											</div>
+								</div>	 
+							   <div style="flex:0 1 25%;height:55px;">
+											<div class="row">
+								              <input placeholder=" " [(ngModel)]=item.name  required="" name="name{{i}}" />
+							                  <label>Name</label> 
+											</div>
+								</div>
+								<div style="flex:0 1 25%;height:55px;">
+											<div class="row">
+								              <input placeholder=" " [(ngModel)]=item.price  required="" name="price{{i}}" />
+							                  <label>price</label> 
+											</div>
+								</div>
+								<div style="flex:0 1 25%;height:55px;">
+											<div class="row">
+								              <input placeholder=" " [(ngModel)]=item.picture  name="picture{{i}}" />
+							                  <label>picture</label> 
+											</div>
+								</div>
+								<div style="flex:1;height:55px;">
+											<div class="row">
+								              <input placeholder=" " [(ngModel)]=item.order  name="order{{i}}" />
+							                  <label>order</label> 
+											</div>
+								</div>
+							
+					    </div>
+					  </fieldset>
+					 
+					</form>
+</div>
+		
+		</div>
+</div>
+</div>
+<!---Item  -->
+
+<div class="mask-flex flex-center" *ngIf="!!modalItem"> 
+		<div  class="psr w95 h95 bg-white bdr8 flex-column" >
+              <i class="fa fa-times mask-close"  (click)="modalItem=false" aria-hidden="true"></i>
+<form  #f="ngForm"
+          (ngSubmit)="saveItem()">
+          <input   [disabled]="!f.valid"	 type="submit" class="submit"
+					   style="position:absolute;right:20px;top:3px;" value="Save"/>
+			<div class="px45 bg-green ta-center"><b>Item Info</b></div>
+					  <div class="flex-row">
+					 		 <div style="flex:0 1 25%;height:55px;" >
+												<div class="row">
+									              <input placeholder=" " [(ngModel)]=item.name  required="" name="name" />
+								                  <label>Name</label> 
+												</div>
+									</div>
+									<div style="flex:0 1 25%;height:55px;" >
+												<div class="row">
+									              <input type="Number" step="1" placeholder=" " [(ngModel)]=item.price  name="price" />
+								                  <label>price</label> 
+												</div>
+									</div>
+									<div style="flex:0 1 25%;height:55px;" >
+												<div class="row">
+									              <input type="Number" step="1"  placeholder=" " [(ngModel)]=item.oldPrice  name="oldPrice" />
+								                  <label>oldPrice </label> 
+												</div>
+									</div>
+
+			  </div>
+</form>	
+                   <div style="flex:1;border:solid red 2px;margin-top:20px" *ngIf="!!item['_id']"  class="flex-row">
+			  		  		<div style="flex:0 0 220px;border:solid blue 2px" class="flex-column">
+			  		  					<div class="px40 bg-blue flex-row">
+			  		  						<div class="flex ta-center"><b>Options</b></div>
+			  								<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true"
+			  									 style="padding:0 10px"  (click)="isSelectItem=-1;select({})"></div>
+			  		  					</div>
+			  		  					<div style="flex:1" class="flex ofy">
+			  		  							<div style="height:2500px;border:solid yellow 2px">test</div>
+			  		  					</div>	
+			  		  		</div>
+
+			  		  		
+
+	<div class="flex flex-column" >
+					<form  #f="ngForm"
+          (ngSubmit)="saveItem()" style="margin-top:10px;position:relative;">
+          
+					  <fieldset>
+					    <legend  align="right" (click)="showCondimentGroup=!showCondimentGroup"><b>Add/Edit Option</b></legend>
+					    <div  class="w100 flex-row" *ngIf="!showCondimentGroup"  >
+					    		 
+						   <div style="flex:0 1 25%;height:55px;" >
+										<div class="row">
+							              <input placeholder=" " [(ngModel)]=condiment.group  required="" name="group" />
+						                  <label>Group Name</label> 
+										</div>
+							</div>
+							<div style="flex:0 1 25%;height:55px;" >
+										<div class="row">
+							              <input type="Number" step="1" placeholder=" " [(ngModel)]=condiment.minimun  name="minimun" />
+						                  <label>Minimun</label> 
+										</div>
+							</div>
+							<div style="flex:0 1 25%;height:55px;" >
+										<div class="row">
+							              <input type="Number" step="1"  placeholder=" " [(ngModel)]=condiment.maximun  name="maximun" />
+						                  <label>Maximun </label> 
+										</div>
+							</div>
+
+					    </div>
+					  </fieldset>
+
+					</form>
+
+					
+				
+				
+<div  class=" ofy flex-row w100" *ngIf="!!condiment['_id']">
+				 	<form #v="ngForm"  (ngSubmit)="saveItem()" style="margin-top:20px" class="w100">
 					  <fieldset>
 					    <legend  align="right"  (click)="showCondiment=!showCondiment" class="px35" style="font-size:1.5rem;">
 					     <b>
@@ -130,16 +357,9 @@
 					    </div>
 					  </fieldset>
 					 
-					</form> -->
+					</form>
 </div>
 		
 		</div>
+		</div>
 </div>
-
-
-<div class="mask" *ngIf="!modal">
-</div>
-<div class="mask-flex flex-center" *ngIf="!modal"> 
-<div style="width:90%;height:90%;background:#fff;border-radius:8px;position:relative;">
-<i class="fa fa-times mask-close"  (click)="modal=false" aria-hidden="true"></i>
-</div></div>
