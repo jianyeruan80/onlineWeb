@@ -14,11 +14,12 @@
 			 </div>	  
 			
 		</div>
+		
 		<div class="flex flex-column" >
 					<form  #f="ngForm"
-          (ngSubmit)="save()" style="margin-top:10px;position:relative;">
+          (ngSubmit)="save()" class="w100" style="margin-top:10px;position:relative;">
            <input  *ngIf="!showCondimentGroup" [disabled]="!f.valid"	 type="submit" class="submit"
-					   style="position:absolute;right:10px;bottom:10px;" value="Save"/>
+					   style="position:absolute;right:10px;top:30px;" value="Save"/>
 					  <fieldset>
 					    <legend  align="right" (click)="showCondimentGroup=!showCondimentGroup"><b>Add/Edit Condiment Group</b></legend>
 					    <div  class="w100 flex-row" *ngIf="!showCondimentGroup"  >
@@ -45,24 +46,23 @@
 					    </div>
 					  </fieldset>
 
-					</form>
-
+					
 					
 				
 				
-<div  class="flexy ofy flex-row w100" *ngIf="!!condiment['_id']"  style="justify-content: flex-start;align-content:flex-start;position:relative;">
-				 	<form #v="ngForm"
-          (ngSubmit)="save()" style="margin-top:20px" class="w100">
-					  <fieldset>
+<div  class="flexy ofy flex-row w100"  style="justify-content: flex-start;align-content:flex-start;position:relative;">
+				 	<!-- <form #v="ngForm"
+          (ngSubmit)="save()" style="margin-top:20px" class="w100"> -->
+					  <fieldset class="w100">
 					    <legend  align="right"  (click)="showCondiment=!showCondiment" class="px35" style="font-size:1.5rem;">
 					     <b>
 					      <li class="fa fa-plus" (click)="addSub()" aria-hidden="true">(Add)</li>
-					      <span style="padding:0 5px;">|</span>
-					      <li class="fa fa-pencil" (click)="saveSub()" aria-hidden="true">(Save)</li></b>
+					     <!--  <span style="padding:0 5px;">|</span>
+					      <li class="fa fa-pencil" (click)="saveSub()" aria-hidden="true">(Save)</li> --></b>
 					      </legend>
 					      <div  class="w100 flex-row" *ngFor="let item of condiment['options'];let i=index;">
 						    	<div style="flex:0 0 30px;height:55px;" (click)="deleteSub(item)">
-											<div class="row">
+											<div class="row" *ngIf="i>0">
 								              
 							                  <label><i class="fa fa-trash"  style="color:#AD1457" aria-hidden="true"></i></label> 
 											</div>
@@ -96,7 +96,7 @@
 
 					      <div  class="w100 flex-row" *ngFor="let item of condimentSubs;let i=index;">
 						    	<div style="flex:0 0 30px;height:55px;" (click)="deleteSub(i)">
-											<div class="row">
+											<div class="row" *ngIf="!(i==0 && !condiment['_id'])">
 								              
 							                  <label><i class="fa fa-trash"  style="color:#AD1457" aria-hidden="true"></i></label> 
 											</div>
@@ -129,8 +129,9 @@
 					    </div>
 					  </fieldset>
 					 
-					</form>
+					<!-- </form> -->
 </div>
-		
+	
+</form>
 		</div>
 </div>

@@ -17,6 +17,7 @@ export class CondimentsComponent implements OnInit {
 constructor(private myService:MyServiceService) { }
  ngOnInit() {
   	this.getCondiments();
+  	this.addSub();
     }
   addSub(){
   	this.condimentSubs.push({"name":"","price":"","order":"","picture":""});
@@ -34,36 +35,16 @@ constructor(private myService:MyServiceService) { }
   	}
   	
   }
-  /*saveSub(){
-            this.condiment['options']=this.condiment['options'] || [];
-            this.condiment['options']=this.condiment['options'].concat(this.condimentSubs);
-            for(var i=0;i<this.condiment['options'].length;i++){
-            	 this.condiment['options'][i]["name"] =this.condiment['options'][i]["name"] || "Default"+i;
-            	  this.condiment['options'][i]["price"] =this.condiment['options'][i]["price"] || 0;
-   }
-          this.myService.service("/globalOptionGroups/"+this.condiment["_id"],"put",this.condiment).subscribe(
-               data=> {
-                   if(!!data){
-                   	 for(var i=0;i<this.condiments.length;i++){
-                    		 if(this.condiments[i]["_id"]==data["_id"]){
-                    		 	 this.condiments[i]=data;
-                    		 	 this.condimentSubs=[];
-                    		 	 break;
-                    		 }	
-                    	}
-                  }
-                 }
-                
-            );
-  }	*/
+
   save(){
-         if(this.condiment["_id"]){
-  	  	  this.condiment['options']=this.condiment['options'] || [];
+  		this.condiment['options']=this.condiment['options'] || [];
             this.condiment['options']=this.condiment['options'].concat(this.condimentSubs);
             for(var i=0;i<this.condiment['options'].length;i++){
             	 this.condiment['options'][i]["name"] =this.condiment['options'][i]["name"] || "Default"+i;
             	  this.condiment['options'][i]["price"] =this.condiment['options'][i]["price"] || 0;
           }
+         if(this.condiment["_id"]){
+  	  	  
   	  	this.myService.service("/globalOptionGroups/"+this.condiment["_id"],"put",this.condiment).subscribe(
                data=> {
                    if(!!data){
@@ -99,6 +80,9 @@ constructor(private myService:MyServiceService) { }
   select(item){
   	this.condiment=JSON.parse(JSON.stringify(item));
     this.condimentSubs=[];
+    if(!this.condiment["_id"]){
+    	this.addSub();
+    }
   }
   delete(item){
   	this.myService.service("/globalOptionGroups/"+item["_id"],"delete").subscribe(
