@@ -11,115 +11,80 @@ import { MyServiceService } from '../../my-service.service';
 })
 export class ItemsComponent implements OnInit {
    appGlobal = AppGlobal.getInstance();
-   category:Object={};
+   category:Object={};//category["customerOpstion"][0]["options"]
    categories:any=[];
    isSelectCat:number=-1;
-
-   optionGroup:Object={};
-   optionGroups:any=[];
-   isSelectOpGroup=-1;
    modal=false;
-   showOption:String="";
-   option:Object={};
-   options:any=[];
-
    modalItem=false;
-   itemShowOption:String="";
-   items:any=[];
+   isSelectOpGroup=-1;
+   categoryOp={};
+   showOption:String="";
+   
+   isSelectOpItem=-1;
    item:Object={};
-   isSelectItemOp:number=-1;
-   itemOpGroup:Object={};
-   itemOpGroups:any=[];
-   itemOp:Object={};
-   itemOps:any=[];
+   items:any=[];
+   itemOp={}; 
+
+   
 
 constructor(private myService:MyServiceService) { }
  ngOnInit() {
   	this.getCategories();
-  	this.addOpGroupItem();
+  	 this.init();
+     this.initItemOp();
     }
- addOp(){
-
-  	this.options.push({"name":"","price":"","order":"","picture":""});
-  }
-  addGroup(){
-  	this.optionGroup={}
- 	this.options=[];this.isSelectOpGroup=-1;
-  	this.options.push({"name":"","price":"","order":"","picture":""});
-  }
-  deleteOp(obj){
-
-  	if(!isNaN(obj)){
-  		this.options.splice(obj,1);	
-  	}else{
-
-  		for(let i=0;i<this.optionGroup['options'].length;i++){
-  			if(obj["_id"]==this.optionGroup['options'][i]["_id"]){
-  				this.optionGroup['options'].splice(i,1)
-         
-  				break;
-  			}
-  		}
-  	}
-  	
-  }
-  deleteOpGroup(item){
-   for(let i=0;i<this.category["customerOptions"].length;i++){
-                      if(item["_id"]==this.category["customerOptions"][i]["_id"]){
-                        this.category["customerOptions"].splice(i,1);
-             this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
+    init(){
+     this.categoryOp={};
+     this.categoryOp['options']=[];
+     this.categoryOp['options'].push({"key":new Date().getTime(),"name":"","price":"","order":"","picture":""});
+     this.isSelectOpGroup=-1;
+    }
+   addOp(){
+     this.categoryOp['options'].push({"key":new Date().getTime(),"name":"","price":"","order":"","picture":""});
+   }
+   deleteOp(i){
+    this.categoryOp['options'].splice(i,1);
+   }
+   deleteOpGroup(i){
+      this.category["customerOptions"].splice(i,1);
+      this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
                data=> {
                    if(!!data){
-                        this.isSelectOpGroup=-1;
-                        this.addGroup();
-                        this.selectCat(data);
+                     for(var i=0;i<this.categories.length;i++){
+                         if(this.categories[i]["_id"]==data["_id"]){
+                           this.categories[i]=this.category;
+                          break;
+                         }  
+                      }
                    }
-                 })
+                 }
                 
-                        break;
-              }
-      }
-  }
-saveOpGroup(){
-  
-       this.category["customerOptions"]=this.category["customerOptions"] || [];
-       this.optionGroup["options"]=this.optionGroup["options"] || [];
-       this.optionGroup["options"]=this.optionGroup["options"].concat(this.options);
-       if(!this.optionGroup["_id"]){
-       		 this.category["customerOptions"]=this.category["customerOptions"].concat(this.optionGroup);
-       }else{
-       	   for(let i=0;i<this.category["customerOptions"].length;i++){
-       	   	     if(this.optionGroup["_id"]==this.category["customerOptions"][i]["_id"]){
-       	   	     	this.category["customerOptions"][i]=this.optionGroup;
-       	   	     }
-       	   }
-       }
-       
-      
-
-            this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
+            )
+   }
+   saveCatOp(){
+     this.category["customerOptions"]=this.category["customerOptions"] || [];
+     if(!this.categoryOp["_id"]){
+       this.isSelectOpGroup=this.category["customerOptions"].length;
+       this.category["customerOptions"].push(this.categoryOp); 
+    }else{
+      this.category["customerOptions"][this.isSelectOpGroup]=this.categoryOp;
+     }
+     this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
                data=> {
                    if(!!data){
                      for(var i=0;i<this.categories.length;i++){
                          if(this.categories[i]["_id"]==data["_id"]){
                            this.categories[i]=data;
-                           this.selectCat(data);
-                           if(!this.optionGroup["_id"]){
-                              this.isSelectOpGroup=data["customerOptions"].length-1;
-                              this.optionGroup=this.categories[i]["customerOptions"][this.isSelectOpGroup];
-                              
-                            }
-                               this.optionGroups=[];
-                              this.options=[];
-                           break;
+                           this.categoryOp=data["customerOptions"][this.isSelectOpGroup];           
+                            break;
                          }  
                       }
                    }
-                 })
+                 }
                 
-            
-}
-  saveCat(){
+            )
+   }
+   saveCat(){
        if(!!this.category["_id"]){
   	  	this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
                data=> {
@@ -127,8 +92,8 @@ saveOpGroup(){
                    	 for(var i=0;i<this.categories.length;i++){
                     		 if(this.categories[i]["_id"]==data["_id"]){
                     		 	 this.categories[i]=data;
-                    		 	  
-                    		 	 break;
+
+                    		 	  break;
                     		 }	
                     	}
      	             }
@@ -142,35 +107,18 @@ saveOpGroup(){
                     this.isSelectCat=this.categories.length;
                     this.category=data;
                    	this.categories.push(data);
-                   	
-
-                   }
-                   
-                  	
-                 }
-                
-            );
+                }})
   	  }
   	  
   }
-  selectCat(item){
-    this.showOption="";
-  	this.category=JSON.parse(JSON.stringify(item));
-     if(!!this.category["customerOptions"]){
-        for(var i=0;i<this.category["customerOptions"].length;i++){
-        this.showOption+=this.category["customerOptions"][i]["group"]+","
-      }
-    }
-   
-    
+  selectCatOp(item){
+    this.categoryOp=JSON.parse(JSON.stringify(item));
   }
-   selectOpGroup(item){
-   this.options=[];
-    this.optionGroup=JSON.parse(JSON.stringify(item));
-  
-   
-     
- }
+  selectCat(item){
+    this.category=JSON.parse(JSON.stringify(item));
+    this.init();
+   }
+
   deleteCat(item){
   	this.myService.service("/categories/"+item["_id"],"delete").subscribe(
                data=> {
@@ -193,128 +141,96 @@ saveOpGroup(){
                data=> {
                    if(!!data){
                    	this.categories=data;
-    }}
-   )
+    }})
   }
-  selectItem(item){
-  	this.itemOpGroup=JSON.parse(JSON.stringify(item));
-  }
-  addOpGroupItem(){
-  	alert("OK")
-  	this.itemOpGroup={};
-  	this.itemOps=[];
-  	this.addOpItem();
-  }
-  addOpItem(){
-  	
-  	this.itemOps.push({"name":"","price":"","order":"","picture":""});
+  closeItem(){
+
+      this.myService.service("/items/categories/"+this.category["_id"],"get").subscribe(
+               data=> {
+                   if(!!data){
+                    this.category['itemsDoc']=data;
+                     for(let i=0;i<this.categories.length;i++){
+                           if(this.categories[i]["_id"]==this.category["_id"]){
+                              this.categories[i]["itemsDoc"]=data;
+                           }
+                     }
+                   }
+    })
+   // =
   }
   addItem(){
-  	this.item={};	
-  	this.itemOpGroup={};
-  	this.itemOps=[];
-    this.addOpItem();
+    this.item={};
+    this.initItemOp();
     this.modalItem=true;
   }
-  saveOpItem(){
-  	
-  	
- 	  this.item["customerOptions"]=this.item["customerOptions"] || [];
-       this.itemOpGroup["options"]=this.itemOpGroup["options"] || [];
-       this.itemOpGroup["options"]=this.itemOpGroup["options"].concat(this.itemOps);
-       if(!this.itemOpGroup["_id"]){
-       		 this.item["customerOptions"]=this.item["customerOptions"].concat(this.itemOpGroup);
-       }else{
-       	   for(let i=0;i<this.item["customerOptions"].length;i++){
-       	   	     if(this.itemOpGroup["_id"]==this.item["customerOptions"][i]["_id"]){
-       	   	     	this.item["customerOptions"][i]=this.itemOpGroup;
-       	   	     }
-       	   }
-       }
-
-    
-       this.myService.service("/items/"+this.item["_id"],"put",this.item).subscribe(
-                 data=> {
-                     if(!!data){
-                     	this.item=data;
-                       //this.isSelectItem=this.data["customerOptions"].length;
-   //itemOpGroup:Object={};
-   //itemOpGroups:any=[];
-                     }
-                   }
-                  
-              )
+  selectItemOp(item){
+    this.itemOp=JSON.parse(JSON.stringify(item));
   }
-  copy(item){
-  	this.item=JSON.parse(JSON.stringify(item));
-    this.modalItem=true;
+  selectItem(item){
+      this.item=JSON.parse(JSON.stringify(item));
+      this.initItemOp();
+      this.modalItem=true;
   }
   saveItem(){
-       this.item["category"]=this.category["_id"];
+      
       if(!!this.item["_id"]){
-          this.myService.service("/items/"+this.item["_id"],"put",this.item).subscribe(
-                 data=> {
-                     if(!!data){
-                     			this.item=data;
-                     			this.myService.service("/categories/"+this.category["_id"],"get").subscribe(
-				                 data=> {
-				                     if(!!data){
-				                     		
-					                       for(var i=0;i<this.categories.length;i++){
-					                           if(this.categories[i]["_id"]==data["_id"]){
-					                             this.categories[i]=data;
-					                             this.category=data; 
-					                             break;
-					                           }  
-				                        }
-				                     }
-				                   }
-				                  
-				              )
-	                      
-                     
-                   }
-                   
-                  }
-              )
-        }else{
-            this.myService.service("/items","post",this.item).subscribe(
-                 data=> {
-                     if(!!data){
-                     	this.myService.service("/categories/"+this.category["_id"],"get").subscribe(
-				                 data=> {
-				                     if(!!data){
-				                     		this.item=data;
-					                       for(var i=0;i<this.categories.length;i++){
-				                           if(this.categories[i]["_id"]==data["_id"]){
-				                             this.categories[i]=data;
-				                              this.category=data;
-				                             break;
-				                           }  
-				                       }
-				                     }
-				                   }
-				                  
-				              )
-                      //this.category["items"].push(data);
-                       /*for(var i=0;i<this.categories.length;i++){
-                           if(this.categories[i]["_id"]==this.category["_id"]){
-                             this.categories[i]=this.category;
-                              
-                             break;
-                           }  
-                        }*/
-                     /* this.isSelectCat=this.categories.length;
-                      this.category=data;
-                      this.categories.push(data);*/
-                      
-
-                     }
-                     
+      
+        this.myService.service("/items/"+this.item["_id"],"put",this.item).subscribe(
+               data=> {
+                   if(!!data){
+                      this.item=data;
                       
                    }
-                  
-              )
-        }
+                 }
+                
+            )
+      }else{
+          this.item["category"]=this.category["_id"];
+          this.myService.service("/items","post",this.item).subscribe(
+               data=> {
+                   if(!!data){
+                      this.item=data;
+                     
+                }})
+      }
   }
+  saveOpItem(){
+    
+     this.item["customerOptions"]=this.item["customerOptions"] || [];
+     if(!this.itemOp["_id"]){
+       this.isSelectOpItem=this.item["customerOptions"].length;
+       this.item["customerOptions"].push(this.itemOp); 
+    }else{
+      this.item["customerOptions"][this.isSelectOpItem]=this.itemOp;
+     }
+     this.myService.service("/items/"+this.item["_id"],"put",this.item).subscribe(
+               data=> {
+                   if(!!data){
+                        this.item=data;
+                  }
+             
+                 })
+  }
+   initItemOp(){
+     this.itemOp={};
+     this.itemOp['options']=[];
+     this.itemOp['options'].push({"key":new Date().getTime(),"name":"","price":"","order":"","picture":""});
+     this.isSelectOpItem=-1;
+    }
+   addItemOp(){
+     this.itemOp['options'].push({"key":new Date().getTime(),"name":"","price":"","order":"","picture":""});
+   }
+   deleteItemGroupOp(i){
+     this.item["customerOptions"].splice(i,1);
+     this.myService.service("/items/"+this.item["_id"],"put",this.item).subscribe(
+               data=> {
+                   if(!!data){
+                        this.item=data;
+                  }
+             
+                 })
+   }
+   deleteItemOp(i){
+    this.itemOp['options'].splice(i,1);
+   }
 }

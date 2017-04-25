@@ -9,6 +9,14 @@ export class FilterPipe implements PipeTransform {
     if (!value) return value;
 
      switch (args[0]) {
+      case "ID":
+              if(!!value){
+                return value;
+                } else{
+                  return new Date().getTime();
+                } 
+        
+      
      	case "=":
      		if(typeof(args[1])=="object"){
      				let key = Object.keys(args[1])[0];
@@ -34,7 +42,7 @@ export class FilterPipe implements PipeTransform {
  transform(value: any, args: any[] = null): any {
     return Object.keys(value).map(key => value[key]);
   }
-
+:filter[0,1]
 
 transform(value: any, args: any): any {
       if (filter && Array.isArray(items)) {
