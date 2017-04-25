@@ -2,7 +2,7 @@
 		<div class="flex flex-column" style="flex:0 0 220px;">
 			  <div class="px40 flex-row bg-blue">
 			  		<div class="flex ta-center"><b>Condiments</b></div>
-			  		<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px"  (click)="isSelect=-1;select({})"></div>
+			  		<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px"  (click)="isSelect=-1;init()"></div>
               </div>
 			  <div class="flexy ofy row-child">
 					  <div [ngClass]="{'px35 flex-row':true,'row-select':isSelect==i}" *ngFor="let item of condiments;let i=index;" (click)="isSelect=i;select(item)" >
@@ -54,82 +54,50 @@
 				 	<!-- <form #v="ngForm"
           (ngSubmit)="save()" style="margin-top:20px" class="w100"> -->
 					  <fieldset class="w100">
-					    <legend  align="right"  (click)="showCondiment=!showCondiment" class="px35" style="font-size:1.5rem;">
+					    <legend  align="right"   class="px35" style="font-size:1.5rem;">
 					     <b>
-					      <li class="fa fa-plus" (click)="addSub()" aria-hidden="true">(Add)</li>
+					      <li class="fa fa-plus" (click)="addOp()" aria-hidden="true">(Add)</li>
 					     <!--  <span style="padding:0 5px;">|</span>
 					      <li class="fa fa-pencil" (click)="saveSub()" aria-hidden="true">(Save)</li> --></b>
 					      </legend>
 					      <div  class="w100 flex-row" *ngFor="let item of condiment['options'];let i=index;">
-						    	<div style="flex:0 0 30px;height:55px;" (click)="deleteSub(item)">
-											<div class="row" *ngIf="i>0">
+						    	<div style="flex:0 0 30px;height:55px;" (click)="deleteOp(i)">
+											<div class="row" *ngIf="condiment['options'].length>1">
 								              
 							                  <label><i class="fa fa-trash"  style="color:#AD1457" aria-hidden="true"></i></label> 
 											</div>
 								</div>	 
 							   <div style="flex:0 1 25%;height:55px;">
 											<div class="row">
-								              <input placeholder=" " [(ngModel)]=item.name  required="" name="a{{i}}" />
+								              <input placeholder=" " [(ngModel)]=item.name  required="" name="name{{item._id || item['key']}}" />
 							                  <label>Condiment Name</label> 
 											</div>
 								</div>
 								<div style="flex:0 1 25%;height:55px;">
 											<div class="row">
-								              <input placeholder=" " type="Number" [(ngModel)]=item.price  step="0.01" required="" name="b{{i}}" />
+								              <input placeholder=" " type="Number" [(ngModel)]=item.price  step="0.01" required="" name="price{{item._id || item['key']}}" />
 							                  <label>price</label> 
 											</div>
 								</div>
 								<div style="flex:0 1 25%;height:55px;">
 											<div class="row">
-								              <input placeholder=" " [(ngModel)]=item.picture  name="c{{i}}" />
+								              <input placeholder=" " [(ngModel)]=item.picture  name="picture{{item._id || item['key']}}" />
 							                  <label>picture</label> 
 											</div>
 								</div>
 								<div style="flex:1;height:55px;">
 											<div class="row">
-								              <input placeholder=" " [(ngModel)]=item.order  name="d{{i}}" />
+								              <input placeholder=" " [(ngModel)]=item.order  name="order{{item._id || item['key']}}" />
 							                  <label>order</label> 
 											</div>
 								</div>
 							
 					    </div>
 
-					      <div  class="w100 flex-row" *ngFor="let item of condimentSubs;let i=index;">
-						    	<div style="flex:0 0 30px;height:55px;" (click)="deleteSub(i)">
-											<div class="row" *ngIf="!(i==0 && !condiment['_id'])">
-								              
-							                  <label><i class="fa fa-trash"  style="color:#AD1457" aria-hidden="true"></i></label> 
-											</div>
-								</div>	 
-							   <div style="flex:0 1 25%;height:55px;">
-											<div class="row">
-								              <input placeholder=" " [(ngModel)]=item.name  required="" name="name{{i}}" />
-							                  <label>Condiment Name</label> 
-											</div>
-								</div>
-								<div style="flex:0 1 25%;height:55px;">
-											<div class="row">
-								              <input placeholder=" " [(ngModel)]=item.price  required="" name="price{{i}}" />
-							                  <label>price</label> 
-											</div>
-								</div>
-								<div style="flex:0 1 25%;height:55px;">
-											<div class="row">
-								              <input placeholder=" " [(ngModel)]=item.picture  name="picture{{i}}" />
-							                  <label>picture</label> 
-											</div>
-								</div>
-								<div style="flex:1;height:55px;">
-											<div class="row">
-								              <input placeholder=" " [(ngModel)]=item.order  name="order{{i}}" />
-							                  <label>order</label> 
-											</div>
-								</div>
-							
-					    </div>
+					    
 					  </fieldset>
 					 
-					<!-- </form> -->
+					
 </div>
 	
 </form>
