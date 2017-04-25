@@ -27,7 +27,7 @@ export class ItemsComponent implements OnInit {
    itemShowOption:String="";
    items:any=[];
    item:Object={};
-   isSelectItem:number=-1;
+   isSelectItemOp:number=-1;
    itemOpGroup:Object={};
    itemOpGroups:any=[];
    itemOp:Object={};
@@ -36,8 +36,15 @@ export class ItemsComponent implements OnInit {
 constructor(private myService:MyServiceService) { }
  ngOnInit() {
   	this.getCategories();
+  	this.addOpGroupItem();
     }
  addOp(){
+
+  	this.options.push({"name":"","price":"","order":"","picture":""});
+  }
+  addGroup(){
+  	this.optionGroup={}
+ 	this.options=[];this.isSelectOpGroup=-1;
   	this.options.push({"name":"","price":"","order":"","picture":""});
   }
   deleteOp(obj){
@@ -64,7 +71,7 @@ constructor(private myService:MyServiceService) { }
                data=> {
                    if(!!data){
                         this.isSelectOpGroup=-1;
-                        this.optionGroup={};
+                        this.addGroup();
                         this.selectCat(data);
                    }
                  })
@@ -76,23 +83,19 @@ constructor(private myService:MyServiceService) { }
 saveOpGroup(){
   
        this.category["customerOptions"]=this.category["customerOptions"] || [];
-        if(!this.optionGroup["_id"]){
-            this.category["customerOptions"].push(this.optionGroup);  
-          }else{
-          
-               for(let i=0;i<this.category["customerOptions"].length;i++){
-                      if(this.optionGroup["_id"]==this.category["customerOptions"][i]["_id"]){
-                        this.category["customerOptions"][i]=this.optionGroup;
-                                this.category["customerOptions"][i]['options']=this.category["customerOptions"][i]['options'] || [];
-                                this.category["customerOptions"][i]['options']=this.category["customerOptions"][i]['options'].concat(this.options);
-                                for(var j=0;j<this.category["customerOptions"][i]['options'].length;j++){
-                                   this.category["customerOptions"][i]['options'][j]["name"] =this.category["customerOptions"][i]['options'][j]["name"] || "Default"+j;
-                                    this.category["customerOptions"][i]['options'][j]["price"] =this.category["customerOptions"][i]['options'][j]["price"] || 0;
-                              }
-                        break;
-                      }
-               }
-          }
+       this.optionGroup["options"]=this.optionGroup["options"] || [];
+       this.optionGroup["options"]=this.optionGroup["options"].concat(this.options);
+       if(!this.optionGroup["_id"]){
+       		 this.category["customerOptions"]=this.category["customerOptions"].concat(this.optionGroup);
+       }else{
+       	   for(let i=0;i<this.category["customerOptions"].length;i++){
+       	   	     if(this.optionGroup["_id"]==this.category["customerOptions"][i]["_id"]){
+       	   	     	this.category["customerOptions"][i]=this.optionGroup;
+       	   	     }
+       	   }
+       }
+       
+      
 
             this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
                data=> {
@@ -106,7 +109,7 @@ saveOpGroup(){
                               this.optionGroup=this.categories[i]["customerOptions"][this.isSelectOpGroup];
                               
                             }
-                             this.optionGroups=[];
+                               this.optionGroups=[];
                               this.options=[];
                            break;
                          }  
@@ -162,7 +165,7 @@ saveOpGroup(){
     
   }
    selectOpGroup(item){
-
+   this.options=[];
     this.optionGroup=JSON.parse(JSON.stringify(item));
   
    
@@ -193,8 +196,57 @@ saveOpGroup(){
     }}
    )
   }
+  selectItem(item){
+  	this.itemOpGroup=JSON.parse(JSON.stringify(item));
+  }
+  addOpGroupItem(){
+  	alert("OK")
+  	this.itemOpGroup={};
+  	this.itemOps=[];
+  	this.addOpItem();
+  }
+  addOpItem(){
+  	
+  	this.itemOps.push({"name":"","price":"","order":"","picture":""});
+  }
   addItem(){
-    alert("OK");
+  	this.item={};	
+  	this.itemOpGroup={};
+  	this.itemOps=[];
+    this.addOpItem();
+    this.modalItem=true;
+  }
+  saveOpItem(){
+  	
+  	
+ 	  this.item["customerOptions"]=this.item["customerOptions"] || [];
+       this.itemOpGroup["options"]=this.itemOpGroup["options"] || [];
+       this.itemOpGroup["options"]=this.itemOpGroup["options"].concat(this.itemOps);
+       if(!this.itemOpGroup["_id"]){
+       		 this.item["customerOptions"]=this.item["customerOptions"].concat(this.itemOpGroup);
+       }else{
+       	   for(let i=0;i<this.item["customerOptions"].length;i++){
+       	   	     if(this.itemOpGroup["_id"]==this.item["customerOptions"][i]["_id"]){
+       	   	     	this.item["customerOptions"][i]=this.itemOpGroup;
+       	   	     }
+       	   }
+       }
+
+    
+       this.myService.service("/items/"+this.item["_id"],"put",this.item).subscribe(
+                 data=> {
+                     if(!!data){
+                     	this.item=data;
+                       //this.isSelectItem=this.data["customerOptions"].length;
+   //itemOpGroup:Object={};
+   //itemOpGroups:any=[];
+                     }
+                   }
+                  
+              )
+  }
+  copy(item){
+  	this.item=JSON.parse(JSON.stringify(item));
     this.modalItem=true;
   }
   saveItem(){
@@ -203,23 +255,55 @@ saveOpGroup(){
           this.myService.service("/items/"+this.item["_id"],"put",this.item).subscribe(
                  data=> {
                      if(!!data){
-
-                       /*for(var i=0;i<this.categories.length;i++){
-                           if(this.categories[i]["_id"]==data["_id"]){
-                             this.categories[i]=data;
-                              
-                             break;
-                           }  
-                        }*/
-                     }
+                     			this.item=data;
+                     			this.myService.service("/categories/"+this.category["_id"],"get").subscribe(
+				                 data=> {
+				                     if(!!data){
+				                     		
+					                       for(var i=0;i<this.categories.length;i++){
+					                           if(this.categories[i]["_id"]==data["_id"]){
+					                             this.categories[i]=data;
+					                             this.category=data; 
+					                             break;
+					                           }  
+				                        }
+				                     }
+				                   }
+				                  
+				              )
+	                      
+                     
                    }
-                  
+                   
+                  }
               )
         }else{
             this.myService.service("/items","post",this.item).subscribe(
                  data=> {
                      if(!!data){
-                      this.item=data;
+                     	this.myService.service("/categories/"+this.category["_id"],"get").subscribe(
+				                 data=> {
+				                     if(!!data){
+				                     		this.item=data;
+					                       for(var i=0;i<this.categories.length;i++){
+				                           if(this.categories[i]["_id"]==data["_id"]){
+				                             this.categories[i]=data;
+				                              this.category=data;
+				                             break;
+				                           }  
+				                       }
+				                     }
+				                   }
+				                  
+				              )
+                      //this.category["items"].push(data);
+                       /*for(var i=0;i<this.categories.length;i++){
+                           if(this.categories[i]["_id"]==this.category["_id"]){
+                             this.categories[i]=this.category;
+                              
+                             break;
+                           }  
+                        }*/
                      /* this.isSelectCat=this.categories.length;
                       this.category=data;
                       this.categories.push(data);*/
