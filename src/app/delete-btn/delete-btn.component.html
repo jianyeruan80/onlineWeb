@@ -1,0 +1,7 @@
+<!-- 
+<div class="mask" *ngIf="!!appGlobal.isDel">
+</div> -->
+<div class="mask-flex flex-center" *ngIf="!!appGlobal.isDel"> 
+		<div (click)="ok(true)">OK</div>
+		<div (click)="ok(false)">Cancel</div>
+</div>

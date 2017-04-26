@@ -1,5 +1,6 @@
+<app-delete-btn (deleteBnt)="delParent($event)" ></app-delete-btn>
 <div class="w100 h100 flex-row">
-		<div class="flex flex-column" style="flex:0 0 210px;">
+		<div class="flex flex-column" style="flex:0 0 220px;">
 			  <div class="px40 flex-row bg-blue">
 			  		<div class="flex ta-center"><b>Categories</b></div>
 			  		<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px"  (click)="isSelectCat=-1;selectCat({})"></div>
@@ -7,7 +8,7 @@
 			  <div class="flexy ofy row-child">
 					  <div [ngClass]="{'px40 flex-row':true,'row-select':isSelectCat==i}" *ngFor="let item of categories;let i=index;" (click)="isSelectCat=i;selectCat(item)" >
 					  			<div class="flex">{{item.name}}</div>
-					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" (click)="deleteCat(item)" 
+					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" (click)="delete(item,'Category')" 
 					  		style="padding:0 10px 0 5px"></div>
 					  </div>
 			
@@ -37,7 +38,7 @@
 							</div>
 							<div style="flex:0 1 25%;height:55px;" >
 										<div class="row">
-							              <input  placeholder=" " [ngModel]="category.customerOptions | filter:['test']"   name="customerOptions" 
+							              <input  placeholder=" " [ngModel]=showOption  name="customerOptions" 
 							               (click)="modal=true;selectCat(category)"  />
 						                  <label>customerOptions </label> 
 										</div>
@@ -54,10 +55,10 @@
 		 	<div style="margin-right:auto">name</div> <div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px" (click)="addItem()"></div>
 		 </div>	
 			
-	<div  class="flexy ofy flex-nocolumn w100 row-child" *ngIf="!!category['_id']">
+	<div  class="flexy ofy flex-column w100 row-child" *ngIf="!!category['_id']">
 		 
 		
-		<div *ngFor="let item of category['itemsDoc'];let i=index;" (click)="selectItem(item)" class="px40" style="flex:0 0 40px">
+		<div *ngFor="let item of category['itemsDoc'];let i=index;" (click)="selectItem(item)" class="px40">
 			{{item.name}}
 		</div>
 	</div>
@@ -71,8 +72,7 @@
 <div class="mask-flex flex-center" *ngIf="!!modal"> 
 <div  class="psr w90 h90 bg-white bdr8 flex-row" >
 <i class="fa fa-times mask-close"  (click)="modal=false" aria-hidden="true"></i>
-	
- <div style="flex:0 0 220px;" class="h100 bc flex-nocolumn">
+	<div style="flex:0 0 220px;" class="h100 bc flex-nocolumn">
 			  <div class="px40 flex-row bg-blue">
 			  		<div class="flex ta-center"><b>Options</b></div>
 			  		<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px" (click)="init()"></div>
@@ -89,13 +89,13 @@
 
 
 
-
+<div class="flex flex-column" >
 					<form  #f="ngForm"
-          (ngSubmit)="saveCatOp()" class="flex flex-column" style="overflow:hidden;">
+          (ngSubmit)="saveCatOp()" class="w100">
            <input  *ngIf="!showOpGroup" [disabled]="!f.valid"	 type="submit" class="submit"
 					   style="position:absolute;right:10px;top:45px;" value="Save"/>
 
-						  <fieldset style="margin-top:15px;" class="w100">
+						  <fieldset style="margin-top:15px;">
 						    <legend  align="right" ><b>Add/Edit Options</b></legend>
 						    <div  class="w100 flex-row">
 						    		 
@@ -124,9 +124,9 @@
 					
 
 					
-	<!-- <div  class="flexy "  style="justify-content: flex-start;align-content:flex-start;position:relative;"> -->
+	<div  class="flexy ofy flex-row w100"  style="justify-content: flex-start;align-content:flex-start;position:relative;">
 				 	
-					  <fieldset class="ofy  flex-row  w100 flex">
+					  <fieldset class="w100">
 					    <legend  align="right"  class="px40" style="font-size:1.5rem;">
 					     <b>
 					      <li class="fa fa-plus" (click)="addOp()" aria-hidden="true">(Add)</li>
@@ -169,9 +169,9 @@
 					  </fieldset>
 					 
 					
-<!-- </div> -->
+</div>
 		</form>
-
+		</div>
 </div>
 </div>		
 <!-- </div>
@@ -179,13 +179,13 @@
 <!--                                   Item                       -->
 
 <div class="mask-flex flex-center" *ngIf="!!modalItem"> 
-		<div  class="psr w90 h90 bg-white bdr8 flex-column" >
+		<div  class="psr w95 h95 bg-white bdr8 flex-column" >
               <i class="fa fa-times mask-close"  (click)="modalItem=false;closeItem()" aria-hidden="true"></i>
 <form  #f="ngForm"
           (ngSubmit)="saveItem()">
            <input   [disabled]="!f.valid"	 type="submit" class="submit"
-					     style="position:absolute;right:20px;top:1.5px;" value="Save"/>
-				<div class="px45 bc ta-center"><b>Item Info</b></div>
+					     style="position:absolute;right:20px;top:3px;" value="Save"/>
+				<div class="px45 bg-green ta-center"><b>Item Info</b></div>
 					  <div class="flex-row">
 					 		 <div style="flex:0 1 25%;height:55px;" >
 												<div class="row">
@@ -209,8 +209,8 @@
 			  </div>
 </form>	
                   
-                   <div style="flex:1;margin-top:20px" *ngIf="!!item['_id']"  class="flex-row">
-			  		  		<div style="flex:0 0 210px" class="flex-column">
+                   <div style="flex:1;border:solid red 2px;margin-top:20px" *ngIf="!!item['_id']"  class="flex-row">
+			  		  		<div style="flex:0 0 220px;border:solid blue 2px" class="flex-column">
 			  		  					<div class="px40 bg-blue flex-row">
 			  		  						<div class="flex ta-center"><b>Options</b></div>
 			  								
@@ -236,11 +236,11 @@
 			  		  					
 			  		  		</div>
 
-			  		  		
-         
+			  <form  #f="ngForm"
+                               (ngSubmit)="saveOpItem()" style="margin-top:10px;position:relative;">		  		
+         <div class="flex flex-column" style="border:solid pink 10px" >
 					
-          <form  #f="ngForm"
-                               (ngSubmit)="saveOpItem()" class="flex flex-column"  style="width:98%">
+          
 					  <fieldset>
 					    <legend  align="right" ><b>Add/Edit Option</b></legend>
 					    <div  class="w100 flex-row">
@@ -272,13 +272,14 @@
 					
 				
 				
-                   <!--  <div  class="ofy flex flex-row"> -->
+<div  class="ofy flex w100" style="border:solid green 20px;">
 				 
-					  <fieldset class="w100 ofy flex flex-row">
-					    <legend  align="right"   class="px40" style="font-size:1.5rem;border:0">
+					  <fieldset class="w100">
+					    <legend  align="right"   class="px40" style="font-size:1.5rem;">
 					     <b>
 					      <li class="fa fa-plus" (click)="addItemOp()" aria-hidden="true">(Add)</li>
 					      
+					     
 					     </b>
 					      </legend>
 					      <div  class="w100 flex-row" *ngFor="let op of itemOp['options'];let i=index;">
@@ -318,9 +319,10 @@
 
 					   
 					  </fieldset>
-	<!-- </div> -->
+					 
 					
-</form>
+</div>
 		<!-- </form> -->
-		</div>
+		</div></form>
 	</div>
+

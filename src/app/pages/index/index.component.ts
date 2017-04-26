@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,EventEmitter} from '@angular/core';
 import { HomeComponent } from '../home/home.component';
 import {Router}  from '@angular/router';
 import { MyServiceService } from '../../my-service.service';
@@ -12,9 +12,11 @@ import { LocalStorageService } from 'angular-2-local-storage';
 })
 export class IndexComponent implements OnInit {
 appGlobal = AppGlobal.getInstance();
+broadcastDel: EventEmitter<boolean>;
 testList:any=[];
  constructor(private myService:MyServiceService,private router:Router, private storeService: LocalStorageService) { 
-
+     // this.deleteBnt = new EventEmitter<boolean>();
+     this.broadcastDel = new EventEmitter<boolean>();
   	 this.testList=[
   	          {"name":"a","age":1},{"name":"a1","age":2},
   	          {"name":"a3","age":1},{"name":"a4","age":2},
@@ -49,5 +51,6 @@ testList:any=[];
   	//this.router.navigate(['/index/about/2',json]);
 
   }
+
 
 }

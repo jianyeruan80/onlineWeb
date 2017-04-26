@@ -39,6 +39,7 @@ import { GroupComponent } from './pages/group/group.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { CondimentsComponent } from './pages/condiments/condiments.component';
 import { ItemsComponent } from './pages/items/items.component';
+import { DeleteBtnComponent } from './delete-btn/delete-btn.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { ItemsComponent } from './pages/items/items.component';
     CategoryComponent,
     CondimentsComponent,
     MenusComponent,
-    ItemsComponent
+    ItemsComponent,
+    DeleteBtnComponent
     
     
   ],

@@ -14,6 +14,7 @@ export class AppGlobal {
     error:Object={};
     navSelect:string;
     isStaff:String="Staff";
+    isDel:boolean =false;
     isDebug: boolean = true;
     server: string = this.isDebug ? "http://192.168.1.100:3999/api" : "http://service520.com:3100/api";
     picUrl: string = this.isDebug ? "http://192.168.1.100:3999/" : "http://service520.com:3100/";
