@@ -54,7 +54,7 @@ input[type=checkbox]:checked + label span {
   border: 1px solid #ccc  !important;
 }*/
 .staffdiv{
-	line-height:45px;height:45px;font-size:25px;padding:0 5px 0 10px;
+	line-height:40px;height:40px;font-size:1.2rem;padding:0 5px 0 10px;
 display:block;
 }
 .staffdiv:nth-of-type(odd){

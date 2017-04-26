@@ -5,9 +5,9 @@
 			  		<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px"  (click)="isSelect=-1;init()"></div>
               </div>
 			  <div class="flexy ofy row-child">
-					  <div [ngClass]="{'px35 flex-row':true,'row-select':isSelect==i}" *ngFor="let item of condiments;let i=index;" (click)="isSelect=i;select(item)" >
+					  <div [ngClass]="{'px40 flex-row':true,'row-select':isSelect==i}" *ngFor="let item of condiments;let i=index;" (click)="isSelect=i;select(item)" >
 					  			<div class="flex">{{item.group}}</div>
-					  		<div class="fa fa-trash fa-1x px35 ac" aria-hidden="true" (click)="delete(item)" 
+					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" (click)="delete(item)" 
 					  		style="padding:0 10px 0 5px"></div>
 					  </div>
 			
@@ -54,7 +54,7 @@
 				 	<!-- <form #v="ngForm"
           (ngSubmit)="save()" style="margin-top:20px" class="w100"> -->
 					  <fieldset class="w100">
-					    <legend  align="right"   class="px35" style="font-size:1.5rem;">
+					    <legend  align="right"   class="px40" style="font-size:1.5rem;">
 					     <b>
 					      <li class="fa fa-plus" (click)="addOp()" aria-hidden="true">(Add)</li>
 					     <!--  <span style="padding:0 5px;">|</span>

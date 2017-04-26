@@ -9,6 +9,12 @@ export class FilterPipe implements PipeTransform {
     if (!value) return value;
 
      switch (args[0]) {
+      case "test":
+          let str="";
+          for(let i=0;i<value.length;i++){
+              str+=value[i]["group"]+" , "
+          }
+       return str ;
       case "ID":
               if(!!value){
                 return value;

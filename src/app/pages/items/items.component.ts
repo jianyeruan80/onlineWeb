@@ -46,13 +46,19 @@ constructor(private myService:MyServiceService) { }
     this.categoryOp['options'].splice(i,1);
    }
    deleteOpGroup(i){
+
       this.category["customerOptions"].splice(i,1);
       this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
                data=> {
                    if(!!data){
+
                      for(var i=0;i<this.categories.length;i++){
-                         if(this.categories[i]["_id"]==data["_id"]){
+                         if(this.categories[i]["_id"]==this.category["_id"]){
                            this.categories[i]=this.category;
+                           console.log("==================");
+                           console.log(data);
+                           this.category=data;
+                           console.log("==================");
                           break;
                          }  
                       }
@@ -72,9 +78,10 @@ constructor(private myService:MyServiceService) { }
      this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
                data=> {
                    if(!!data){
-                     for(var i=0;i<this.categories.length;i++){
+                     for(let i=0;i<this.categories.length;i++){
                          if(this.categories[i]["_id"]==data["_id"]){
                            this.categories[i]=data;
+                           this.category=data;
                            this.categoryOp=data["customerOptions"][this.isSelectOpGroup];           
                             break;
                          }  
@@ -89,10 +96,10 @@ constructor(private myService:MyServiceService) { }
   	  	this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
                data=> {
                    if(!!data){
-                   	 for(var i=0;i<this.categories.length;i++){
+                   	 for(let i=0;i<this.categories.length;i++){
                     		 if(this.categories[i]["_id"]==data["_id"]){
                     		 	 this.categories[i]=data;
-
+                    		 	 this.category=data;
                     		 	  break;
                     		 }	
                     	}
@@ -119,7 +126,7 @@ constructor(private myService:MyServiceService) { }
     this.init();
    }
 
-  deleteCat(item){
+   deleteCat(item){
   	this.myService.service("/categories/"+item["_id"],"delete").subscribe(
                data=> {
                     if(!!data){

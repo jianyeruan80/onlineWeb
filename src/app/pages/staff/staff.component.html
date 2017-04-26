@@ -44,13 +44,13 @@
 				<form   #f="ngForm"
 			          (ngSubmit)="saveRole()" class="w100 h100">
 				      <div class="form">
-						      	<div style="flex:1;height:60px;">
+						      	<div style="flex:1;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]=role.name  name="name" required />
 					                  <label>Role Name</label> 
 									</div>
 								</div>
-								<div style="flex:1;height:60px;">
+								<div style="flex:1;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]=role.description  name="description" />
 					                  <label>Description</label> 
@@ -77,82 +77,82 @@
 					<form   #f="ngForm"
 			          (ngSubmit)="saveUser()" class="w100 h100">
 				      <div class="form">
-						      	<div style="flex:1 1 25%;height:60px;">
+						      	<div style="flex:1 1 25%;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]=user.userName  name="name" required />
 					                  <label>User Name</label> 
 									</div>
 								</div>
-								<div style="flex:1 1 25%;height:60px;">
+								<div style="flex:1 1 25%;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]=user.password  name="password" required />
 					                  <label>Password</label> 
 									</div>
 								</div>
 								
-									<div style="flex:1 1 25%;height:60px;">
+									<div style="flex:1 1 25%;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]=user.description  name="descript" />
 					                  <label>Description</label> 
 									</div>
 								</div>
-								<div style="flex:1 1 25%;height:60px;">
-									<div class="row-other" style="line-height:60px;">
+								<div style="flex:1 1 25%;height:55px;">
+									<div class="row-other" style="line-height:55px;">
 							              <input class="submit store-submit" type="submit" value="Save" [disabled]="!f.valid"	>
 									</div>
 								</div>
 
 
-									<div style="flex:1 1 25%;height:60px;">
+									<div style="flex:1 1 25%;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]=user.firstName  name="firstName"  />
 					                  <label>First Name</label> 
 									</div>
 								</div>
-								<div style="flex:1 1 25%;height:60px;">
+								<div style="flex:1 1 25%;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]=user.lastName  name="lastName"  />
 					                  <label>Last Name</label> 
 									</div>
 								</div>
 								
-									<div style="flex:1 1 25%;height:60px;">
+									<div style="flex:1 1 25%;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]=user.email  name="email"  />
 					                  <label>Email</label> 
 									</div>
 								</div>
-							  <div style="flex:1 1 25%;height:60px;">
+							  <div style="flex:1 1 25%;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]=user.phoneNum1  name="phoneNum1"  />
 					                  <label>Phone </label> 
 									</div>
 								</div>
-								<div style="flex:1 1 40%;height:60px;">
+								<div style="flex:1 1 40%;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]='user.addressInfo["address"]'  name="address"  />
 					                  <label>address </label> 
 									</div>
 								 </div>
-								 <div style="flex:1;height:60px;">
+								 <div style="flex:1;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]='user.addressInfo["city"]'  name="city"  />
 					                  <label>city </label> 
 									</div>
 								 </div>
-								 <div style="flex:1;height:60px;">
+								 <div style="flex:1;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]='user.addressInfo["state"]'  name="state"  />
 					                  <label>state </label> 
 									</div>
 								 </div>
-								 <div style="flex:1;height:60px;">
+								 <div style="flex:1;height:55px;">
 									<div class="row">
 						              <input placeholder=" " [(ngModel)]='user.addressInfo["zipCode"]'  name="zipCode"  />
 					                  <label>zipCode </label> 
 									</div>
 								 </div>
-								<div style="flex:1;height:60px;">
+								<div style="flex:1;height:55px;">
 									<div class="row-other flex-row" style="height:50px;align-items:flex-end;justify-content:center;" >
 						              <input type="checkbox" id="US" name="checkbox" [(ngModel)]='user.status' class="el-opacity" checked="checked">
 						              <label for="US">Status</label>

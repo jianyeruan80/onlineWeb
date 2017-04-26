@@ -3,15 +3,15 @@
 	border-bottom:solid red 1px;
 }
 */.nav-header{
-background-color:#5DBA9D;line-height:40px;height:40px;font-size:1.5rem;padding:0 5px;
+background-color:#5DBA9D;line-height:40px;height:40px;font-size:1.4rem;padding:0 5px;
 color:#fff;
 }
 .nav-header i{
-	float: right;line-height:40px;font-size:1.3rem;
+	float: right;line-height:40px;font-size:1.2rem;
 }
 
 .nav-content{
-line-height:40px;height:40px;font-size:1.3rem;padding:0 5px 0 10px;
+line-height:40px;height:40px;font-size:1.2rem;padding:0 5px 0 10px;
 display:block;
 }
 .nav-content:nth-of-type(odd){
