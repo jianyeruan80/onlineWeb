@@ -8,7 +8,7 @@ import { AppGlobal } from '../app-global';
 export class DeleteBtnComponent implements OnInit {
  @Output() deleteBnt:EventEmitter<boolean>;
  
- fc:Function;
+
  appGlobal = AppGlobal.getInstance();
   constructor() { 
 	this.deleteBnt = new EventEmitter<boolean>();
@@ -18,11 +18,12 @@ export class DeleteBtnComponent implements OnInit {
   	 //  this.broadcastDel.subscribe((event) => this.fc=event);
   }
   ok(n){
-  	 //if(n){
-  	  this.deleteBnt.emit(n);
-  	  //}else{
-  	  //	this.deleteBnt.emit(this.fc);
-  	 // }
-  }
 
+  	 this.deleteBnt.emit(n);
+   }
+stop(event){
+ //   alert("OK")
+   // event.stopPropagation();
+
+  }
 }

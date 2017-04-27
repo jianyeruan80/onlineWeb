@@ -1,7 +1,20 @@
 <!-- 
 <div class="mask" *ngIf="!!appGlobal.isDel">
 </div> -->
-<div class="mask-flex flex-center" *ngIf="!!appGlobal.isDel"> 
-		<div (click)="ok(true)">OK</div>
+<!-- <div class="mask-flex flex-center" *ngIf="!!appGlobal.isDel"> 
+		<div (click)="ok(true)">OK</div> (click)="appGlobal.isDel=false"
 		<div (click)="ok(false)">Cancel</div>
+</div>
+ -->
+
+<div class="mask" *ngIf="!!appGlobal.isDel" >
+</div>
+<div class="mask-flex flex-center" *ngIf="!!appGlobal.isDel" (click)="appGlobal.isDel=false"> 
+        
+        <div style="background:#fff;width:480px;text-align: center;border-radius:8px;padding-bottom:10px" (click)="stop($event); $event.stopPropagation();false">
+          <div> <h1>Are you Delete?</h1></div>
+          <div class="px50 flex-row" style="line-height:2;justify-content:space-around">
+              <input type="button" class="submit" (click)="ok(false)" value="Cancel"/> 
+              <input type="button" class="submit" (click)="ok(true)" value="Delete"/> </div>
+       </div>
 </div>

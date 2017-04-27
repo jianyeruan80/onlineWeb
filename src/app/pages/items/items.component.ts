@@ -10,7 +10,7 @@ import { MyServiceService } from '../../my-service.service';
   styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit {
-   @Output() deleteBnt:EventEmitter<boolean>;
+   //@Output() deleteBnt:EventEmitter<boolean>;
    
    appGlobal = AppGlobal.getInstance();
    category:Object={};//category["customerOpstion"][0]["options"]
@@ -246,7 +246,8 @@ constructor(private myService:MyServiceService) {
     this.itemOp['options'].splice(i,1);
    }
 
-    delParent(n){
+    deleteBnt(n){
+    	
     this.appGlobal.isDel=n;
     if(n==true && this.delSign=="Category"){
          this.deleteCat(this.item);
@@ -263,4 +264,5 @@ constructor(private myService:MyServiceService) {
     this.delSign=sign;
     //this.broadcastDel.emit(callBack);
   }
+  
 }
