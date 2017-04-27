@@ -27,7 +27,7 @@ export class ItemsComponent implements OnInit {
    items:any=[];
    itemOp={}; 
    delSign:String="";
-
+   childValue:any; 
    
 
 constructor(private myService:MyServiceService) { 
@@ -56,14 +56,13 @@ constructor(private myService:MyServiceService) {
       this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
                data=> {
                    if(!!data){
-
+                   	this.appGlobal.isDel=false;
                      for(var i=0;i<this.categories.length;i++){
                          if(this.categories[i]["_id"]==this.category["_id"]){
                            this.categories[i]=this.category;
-                           console.log("==================");
-                           console.log(data);
+                          
                            this.category=data;
-                           console.log("==================");
+                     
                           break;
                          }  
                       }
@@ -135,6 +134,7 @@ constructor(private myService:MyServiceService) {
   	this.myService.service("/categories/"+item["_id"],"delete").subscribe(
                data=> {
                     if(!!data){
+                    	this.appGlobal.isDel=false;
                     	for(var i=0;i<this.categories.length;i++){
                     		 if(this.categories[i]["_id"]==item["_id"]){
                     		 	 this.categories.splice(i,1);
@@ -219,6 +219,7 @@ constructor(private myService:MyServiceService) {
                data=> {
                    if(!!data){
                         this.item=data;
+                        this.itemOp=JSON.parse(JSON.stringify(this.item["customerOptions"][this.isSelectOpItem]));
                   }
              
                  })
@@ -233,11 +234,13 @@ constructor(private myService:MyServiceService) {
      this.itemOp['options'].push({"key":new Date().getTime(),"name":"","price":"","order":"","picture":""});
    }
    deleteItemGroupOp(i){
+   	
      this.item["customerOptions"].splice(i,1);
      this.myService.service("/items/"+this.item["_id"],"put",this.item).subscribe(
                data=> {
                    if(!!data){
-                        this.item=data;
+                   	   this.appGlobal.isDel=false;
+                       this.initItemOp();
                   }
              
                  })
@@ -247,22 +250,41 @@ constructor(private myService:MyServiceService) {
    }
 
     deleteBnt(n){
+    
+    if(n==false && n!==0){
     	
-    this.appGlobal.isDel=n;
-    if(n==true && this.delSign=="Category"){
-         this.deleteCat(this.item);
-         this.appGlobal.isDel=false;
+    	this.appGlobal.isDel=false;
+    	
+         
+         
       }else{
-        this.appGlobal.isDel=false;
+
+         if(isNaN(n)){
+    	
+    	 	 if(this.delSign=="Cat"){
+    	 	 	this.deleteCat(n);		
+    	 	 }else{
+
+    	 	 }
+    	 	 
+    	 }else{
+    	 	
+    	 	if(this.delSign=="CatOp"){
+    	 		this.deleteOpGroup(n);		
+    	 	}else{
+    	 		this.deleteItemGroupOp(n);
+    	 	}
+    	 	
+    	 }
       }
    
     
   }
   delete(item,sign){
-    this.item=item;
+  	
+  	this.delSign=sign;
+    this.childValue=item;
     this.appGlobal.isDel=true;
-    this.delSign=sign;
-    //this.broadcastDel.emit(callBack);
-  }
-  
+   }
+
 }

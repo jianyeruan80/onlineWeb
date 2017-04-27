@@ -12,7 +12,7 @@ export class CondimentsComponent implements OnInit {
    condiment:Object={}; 
    condiments:any=[];
    isSelect:number=-1;
-
+   childValue:any;
   constructor(private myService:MyServiceService) { }
    ngOnInit() {
     	this.getCondiments();
@@ -67,15 +67,24 @@ export class CondimentsComponent implements OnInit {
   select(item){
   	this.condiment=JSON.parse(JSON.stringify(item));
   }
-  delete(item){
-  	this.myService.service("/globalOptionGroups/"+item["_id"],"delete").subscribe(
+   delete(item){
+    this.childValue=item;
+    this.appGlobal.isDel=true;
+    }
+   deleteBnt(n){
+    	
+   
+    if(n !=false){
+        
+  	      this.myService.service("/globalOptionGroups/"+n["_id"],"delete").subscribe(
                data=> {
                     if(!!data){
                     	for(var i=0;i<this.condiments.length;i++){
-                    		 if(this.condiments[i]["_id"]==item["_id"]){
+                    		 if(this.condiments[i]["_id"]==n["_id"]){
                     		 	 this.condiments.splice(i,1);
                     		 	 this.init();
                     		 	 this.isSelect=-1;
+                    		 	 this.appGlobal.isDel=false;
                     		 	 break;
                     		 }	
                     	}
@@ -83,6 +92,14 @@ export class CondimentsComponent implements OnInit {
                     }
                     }
                  )
+         
+      }else{
+        this.appGlobal.isDel=false;
+      }
+   
+    
+
+  	
   }
   getCondiments(){
   		this.myService.service("/globalOptionGroups/merchantId","get").subscribe(

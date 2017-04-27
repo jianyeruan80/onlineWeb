@@ -6,20 +6,28 @@ import { AppGlobal } from '../app-global';
   styleUrls: ['./delete-btn.component.css']
 })
 export class DeleteBtnComponent implements OnInit {
- @Output() deleteBnt:EventEmitter<boolean>;
- 
+ @Output() deleteBnt:EventEmitter<any>;
+ @Input() childValue:any;
 
  appGlobal = AppGlobal.getInstance();
   constructor() { 
-	this.deleteBnt = new EventEmitter<boolean>();
+	this.deleteBnt = new EventEmitter<any>();
+  //this.childValue= new EventEmitter<any>();
   }
 
   ngOnInit() {
   	 //  this.broadcastDel.subscribe((event) => this.fc=event);
   }
   ok(n){
+      
+      
+      if(n==false){
+        this.deleteBnt.emit(n);
+      }else{
+          this.deleteBnt.emit(this.childValue);  
+      }
 
-  	 this.deleteBnt.emit(n);
+
    }
 stop(event){
  //   alert("OK")

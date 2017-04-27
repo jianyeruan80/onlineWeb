@@ -9,7 +9,7 @@ export class FilterPipe implements PipeTransform {
     if (!value) return value;
 
      switch (args[0]) {
-      case "test":
+      case "OpGroup":
           let str="";
           for(let i=0;i<value.length;i++){
               str+=value[i]["group"]+" , "

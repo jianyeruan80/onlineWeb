@@ -1,4 +1,4 @@
-<app-delete-btn (deleteBnt)="deleteBnt($event)" ></app-delete-btn>
+<app-delete-btn (deleteBnt)="deleteBnt($event)" [childValue]="childValue" ></app-delete-btn>
 <div class="w100 h100 flex-row">
 		<div class="flex flex-column" style="flex:0 0 220px;">
 			  <div class="px40 flex-row bg-blue">
@@ -8,7 +8,7 @@
 			  <div class="flexy ofy row-child">
 					  <div [ngClass]="{'px40 flex-row':true,'row-select':isSelectCat==i}" *ngFor="let item of categories;let i=index;" (click)="isSelectCat=i;selectCat(item)" >
 					  			<div class="flex">{{item.name}}</div>
-					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" (click)="delete(item,'Category')" 
+					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" (click)="delete(item,'Cat')" 
 					  		style="padding:0 10px 0 5px"></div>
 					  </div>
 			
@@ -30,7 +30,7 @@
 						                  <label>Group Name</label> 
 										</div>
 							</div>
-							<div style="flex:0 1 25%;height:55px;" >
+							<div style="flex:0 1 25%;height:55px;" >	
 										<div class="row">
 							              <input type="Number" step="1" placeholder=" " [(ngModel)]=category.globalOptions  name="globalOptions" />
 						                  <label>globalOptions</label> 
@@ -38,7 +38,7 @@
 							</div>
 							<div style="flex:0 1 25%;height:55px;" >
 										<div class="row">
-							              <input  placeholder=" " [ngModel]=showOption  name="customerOptions" 
+							              <input  placeholder=" " [ngModel]="category.customerOptions |filter:['OpGroup']"  name="customerOptions" 
 							               (click)="modal=true;selectCat(category)"  />
 						                  <label>customerOptions </label> 
 										</div>
@@ -67,6 +67,7 @@
 </div>
 
 <!---Category Option  -->
+<!---Category Option  -->
 <div class="mask" *ngIf="!!modal || !!modalItem">
 </div>
 <div class="mask-flex flex-center" *ngIf="!!modal"> 
@@ -80,7 +81,7 @@
 			 <div class="flexy ofy row-child" *ngIf="!!category['customerOptions']">
 					  <div [ngClass]="{'px40 flex-row':true,'row-select':isSelectOpGroup==i}" *ngFor="let cat of category['customerOptions'];let i=index;" >
 					  			<div class="flex" (click)="isSelectOpGroup=i;selectCatOp(cat)">{{cat.group}}</div>
-					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" (click)="deleteOpGroup(i)" 
+					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" (click)="delete(i,'CatOp')" 
 					  		style="padding:0 10px 0 5px"></div>
 					  </div>
 			
@@ -185,7 +186,9 @@
           (ngSubmit)="saveItem()">
            <input   [disabled]="!f.valid"	 type="submit" class="submit"
 					     style="position:absolute;right:20px;top:3px;" value="Save"/>
-				<div class="px45 bg-green ta-center"><b>Item Info</b></div>
+				<div class="px50 bg-white ta-center bdr8" style="background:#eee">
+						<h1 style="margin:0;padding:0">Item info</h1>
+				</div>
 					  <div class="flex-row">
 					 		 <div style="flex:0 1 25%;height:55px;" >
 												<div class="row">
@@ -209,8 +212,8 @@
 			  </div>
 </form>	
                   
-                   <div style="flex:1;border:solid red 2px;margin-top:20px" *ngIf="!!item['_id']"  class="flex-row">
-			  		  		<div style="flex:0 0 220px;border:solid blue 2px" class="flex-column">
+ <div style="flex:1;margin-top:20px" *ngIf="!!item['_id']"  class="flex-row">
+<div style="flex:0 0 210px;" class="flex-column">
 			  		  					<div class="px40 bg-blue flex-row">
 			  		  						<div class="flex ta-center"><b>Options</b></div>
 			  								
@@ -226,7 +229,7 @@
 			  		  					<div class="flex" (click)="isSelectOpItem=i;selectItemOp(item)">{{item.group}}</div>
 			  		  					
 			  		  					<div class="fa fa-trash fa-1x px40" 
-			  		  					aria-hidden="true" (click)="deleteItemGroupOp(i)" 
+			  		  					aria-hidden="true" (click)="isSelectOpItem=i;delete(i,'itemOp')" 
 					  		                   style="padding:0 10px 0 5px">
 					  			
 					  		</div>
@@ -234,14 +237,13 @@
 
 					  		</div>
 			  		  					
-			  		  		</div>
+</div>
 
-			  <form  #f="ngForm"
-                               (ngSubmit)="saveOpItem()" style="margin-top:10px;position:relative;">		  		
-         <div class="flex flex-column" style="border:solid pink 10px" >
+	<form  #f="ngForm"  (ngSubmit)="saveOpItem()" class="flex flex-column"  style="padding-right:4px;">		  		
+         <div class="flex flex-column">
 					
           
-					  <fieldset>
+					  <fieldset class="w100">
 					    <legend  align="right" ><b>Add/Edit Option</b></legend>
 					    <div  class="w100 flex-row">
 					    		 
@@ -272,7 +274,7 @@
 					
 				
 				
-<div  class="ofy flex w100" style="border:solid green 20px;">
+<div  class="ofy flex w100" style="overflow-x:hidden;">
 				 
 					  <fieldset class="w100">
 					    <legend  align="right"   class="px40" style="font-size:1.5rem;">
