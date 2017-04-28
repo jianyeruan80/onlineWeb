@@ -19,6 +19,8 @@
 		<div class="flex flex-column" >
 					<form  #f="ngForm"
           (ngSubmit)="save()" class="w100" style="margin-top:10px;position:relative;">
+          <input type="file" style="display:none" name="picture" #uploadPic (change)="upload($event)"/>
+
            <input  *ngIf="!showCondimentGroup" [disabled]="!f.valid"	 type="submit" class="submit"
 					   style="position:absolute;right:10px;top:30px;" value="Save"/>
 					  <fieldset>
@@ -82,8 +84,10 @@
 								</div>
 								<div style="flex:0 1 25%;height:55px;">
 											<div class="row">
-								              <input placeholder=" " [(ngModel)]=item.picture  name="picture{{item._id || item['key']}}" />
-							                  <label>picture</label> 
+											<img class="img va-center" src="{{appGlobal.picUrl}}{{item.picture}}" width="50" height="50" (click)="uploadPicture($event)"  id="picture{{item._id || item['key']}}"  style="border-radius:6px;" />
+								             <!--  <img  src="item.picture"  name="picture{{item._id || item['key']}}" />
+
+							                  <label>picture</label>  -->
 											</div>
 								</div>
 								<div style="flex:1;height:55px;">

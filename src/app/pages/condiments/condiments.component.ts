@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { AppGlobal } from '../../app-global';
 import {Router,ActivatedRoute}  from '@angular/router';
 import { MyServiceService } from '../../my-service.service';
@@ -9,11 +9,16 @@ import { MyServiceService } from '../../my-service.service';
 })
 export class CondimentsComponent implements OnInit {
    appGlobal = AppGlobal.getInstance();
+    @ViewChild('uploadPic') uploadPic:ElementRef;
+    //showPic:ElementRef;
+    showPic:ElementRef;
+    showPicId:String;
+    /*@ViewChild('showPic') showPic:ElementRef;*/
    condiment:Object={}; 
    condiments:any=[];
    isSelect:number=-1;
    childValue:any;
-  constructor(private myService:MyServiceService) { }
+  constructor(private myService:MyServiceService,public elementRef: ElementRef) { }
    ngOnInit() {
     	this.getCondiments();
        this.init();
@@ -108,5 +113,39 @@ export class CondimentsComponent implements OnInit {
                    	this.condiments=data;
     }}
    );
+  }
+ upload(event): void {
+  this.show(this.showPic,event.target.name);
+}
+show(pic,name):void{
+ let file = this.uploadPic.nativeElement.files[0];
+          var reader = new FileReader();
+          reader.onload = function(e) {
+          var dataURL = reader.result;
+          //this.elementRef.nativeElement.querySelector('div');
+          pic.src=dataURL;
+}
+reader.readAsDataURL(file);
+this.myService.upload("/uploadPic",file,name).subscribe(
+               data=> {if(!!data && !!data.key){
+                 for(let i=0;i<this.condiment["options"].length;i++){
+                   	    	let id=this.condiment["options"][i]["_id"] || this.condiment["options"][i]["key"];
+                   	    	if(this.showPicId=="picture"+id){
+                   	    		this.condiment["options"][i]["picture"]=data.value;
+                   	    		console.log(this.condiment);
+                   	    		break;
+
+                   	    	}
+                   	    }
+               	}}
+               	
+                 
+               );
+
+  }
+uploadPicture(event){
+	  this.showPic=event.target;
+	  this.showPicId=event.target.id;
+      this.uploadPic.nativeElement.click();
   }
 }

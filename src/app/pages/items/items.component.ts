@@ -1,6 +1,6 @@
 
 
-import { Component, OnInit,EventEmitter,Output } from '@angular/core';
+import { Component, OnInit,EventEmitter,Output ,ElementRef,ViewChild} from '@angular/core';
 import { AppGlobal } from '../../app-global';
 import {Router,ActivatedRoute}  from '@angular/router';
 import { MyServiceService } from '../../my-service.service';
@@ -28,7 +28,9 @@ export class ItemsComponent implements OnInit {
    itemOp={}; 
    delSign:String="";
    childValue:any; 
-   
+    @ViewChild('uploadPic') uploadPic:ElementRef;
+    showPic:ElementRef;
+    showPicId:String;
 
 constructor(private myService:MyServiceService) { 
 
@@ -287,4 +289,49 @@ constructor(private myService:MyServiceService) {
     this.appGlobal.isDel=true;
    }
 
+upload(event): void {
+  this.show(this.showPic,event.target.name);
+}
+show(pic,name):void{
+ let file = this.uploadPic.nativeElement.files[0];
+          var reader = new FileReader();
+          reader.onload = function(e) {
+          var dataURL = reader.result;
+          //this.elementRef.nativeElement.querySelector('div');
+          pic.src=dataURL;
+}
+reader.readAsDataURL(file);
+this.myService.upload("/uploadPic",file,name).subscribe(
+               data=> {if(!!data && !!data.key){
+                  
+                 for(let i=0;i<this.categoryOp["options"].length;i++){
+                   	    	let id=this.categoryOp["options"][i]["_id"] || this.categoryOp["options"][i]["key"];
+                   	    	if(this.showPicId=="picture"+id){
+                   	    		this.categoryOp["options"][i]["picture"]=data.value;
+                   	    	   console.log(this.categoryOp);
+                   	    		break;
+
+                   	    	}
+                   	    }
+                   	         for(let i=0;i<this.itemOp["options"].length;i++){
+                   	    	let id=this.itemOp["options"][i]["_id"] || this.itemOp["options"][i]["key"];
+                   	    	if(this.showPicId=="picture"+id){
+                   	    		this.itemOp["options"][i]["picture"]=data.value;
+                   	    	     console.log(this.itemOp["options"]);
+                   	    		break;
+
+                   	    	}
+                   	    }
+               	
+               	}}
+               	
+                 
+               );
+
+  }
+uploadPicture(event){
+	  this.showPic=event.target;
+	  this.showPicId=event.target.id;
+      this.uploadPic.nativeElement.click();
+  }
 }

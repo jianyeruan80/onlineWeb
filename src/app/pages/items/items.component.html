@@ -71,7 +71,7 @@
 <div class="mask" *ngIf="!!modal || !!modalItem">
 </div>
 <div class="mask-flex flex-center" *ngIf="!!modal"> 
-<div  class="psr w90 h90 bg-white bdr8 flex-row" >
+<div  class="psr w80 h80 bg-white bdr8 flex-row" >
 <i class="fa fa-times mask-close"  (click)="modal=false" aria-hidden="true"></i>
 	<div style="flex:0 0 220px;" class="h100 bc flex-nocolumn">
 			  <div class="px40 flex-row bg-blue">
@@ -93,6 +93,7 @@
 <div class="flex flex-column" >
 					<form  #f="ngForm"
           (ngSubmit)="saveCatOp()" class="w100">
+           <input type="file" style="display:none" name="picture" #uploadPic (change)="upload($event)"/>
            <input  *ngIf="!showOpGroup" [disabled]="!f.valid"	 type="submit" class="submit"
 					   style="position:absolute;right:10px;top:45px;" value="Save"/>
 
@@ -154,8 +155,7 @@
 								</div>
 								<div style="flex:0 1 25%;height:55px;">
 											<div class="row">
-								              <input placeholder=" " [(ngModel)]=op.picture  name="picture{{op._id || op['key']}}" />
-							                  <label>picture</label> 
+								              <img class="img va-center" src="{{appGlobal.picUrl}}{{op.picture}}" width="50" height="50" (click)="uploadPicture($event)"  id="picture{{op._id || op['key']}}"  style="border-radius:6px;" />
 											</div>
 								</div>
 								<div style="flex:1;height:55px;">
@@ -180,16 +180,23 @@
 <!--                                   Item                       -->
 
 <div class="mask-flex flex-center" *ngIf="!!modalItem"> 
-		<div  class="psr w95 h95 bg-white bdr8 flex-column" >
+		<div  class="psr w90 h90 bg-white bdr8 flex-column" >
               <i class="fa fa-times mask-close"  (click)="modalItem=false;closeItem()" aria-hidden="true"></i>
 <form  #f="ngForm"
           (ngSubmit)="saveItem()">
+          <input type="file" style="display:none" name="picture" #uploadPic (change)="upload($event)"/>	 
            <input   [disabled]="!f.valid"	 type="submit" class="submit"
 					     style="position:absolute;right:20px;top:3px;" value="Save"/>
 				<div class="px50 bg-white ta-center bdr8" style="background:#eee">
 						<h1 style="margin:0;padding:0">Item info</h1>
 				</div>
 					  <div class="flex-row">
+					 		 <div style="flex:0 1 25%;height:55px;">
+											<div class="row">
+								              <img class="img va-center" src="{{appGlobal.picUrl}}{{item.picture}}" width="50" height="50" (click)="uploadPicture($event)"  id="picture{{item._id || item['key']}}"  style="border-radius:6px;" />
+											</div>
+								</div>
+
 					 		 <div style="flex:0 1 25%;height:55px;" >
 												<div class="row">
 									              <input placeholder=" " [(ngModel)]=item.name  name="name" required />
@@ -202,12 +209,12 @@
 								                  <label>price</label> 
 												</div>
 									</div>
-									<div style="flex:0 1 25%;height:55px;" >
+								<!-- 	<div style="flex:0 1 25%;height:55px;" >
 												<div class="row">
 									             <input type="Number" step="0.01"  placeholder=" " [(ngModel)]=item.oldPrice  name="oldPrice" required />
 								                  <label>oldPrice</label> 
 												</div>
-									</div>
+									</div> -->
 
 			  </div>
 </form>	
@@ -239,7 +246,8 @@
 			  		  					
 </div>
 
-	<form  #f="ngForm"  (ngSubmit)="saveOpItem()" class="flex flex-column"  style="padding-right:4px;">		  		
+	<form  #f="ngForm"  (ngSubmit)="saveOpItem()" class="flex flex-column"  style="padding-right:4px;">	
+	 <input type="file" style="display:none" name="picture" #uploadPic (change)="upload($event)"/>	  		
          <div class="flex flex-column">
 					
           
@@ -306,8 +314,7 @@
 								</div>
 								<div style="flex:0 1 25%;height:55px;">
 											<div class="row">
-								              <input placeholder=" " [(ngModel)]=op.picture  name="picture{{op._id || op['key']}}" />
-							                  <label>picture</label> 
+								              <img class="img va-center" src="{{appGlobal.picUrl}}{{op.picture}}" width="50" height="50" (click)="uploadPicture($event)"  id="picture{{op._id || op['key']}}"  style="border-radius:6px;" />
 											</div>
 								</div>
 								<div style="flex:1;height:55px;">
