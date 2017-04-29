@@ -37,7 +37,7 @@ reader.readAsDataURL(file);
 this.myService.upload("/uploadPic",file,name).subscribe(
                data=> {if(!!data && !!data.key){
                	this.store[data.key]=(data.value || "");
-
+                this.uploadPic.nativeElement=null;
                	}}
                	
                  

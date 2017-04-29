@@ -19,7 +19,7 @@
 		<div class="flex flex-column" >
 					<form  #f="ngForm"
           (ngSubmit)="save()" class="w100" style="margin-top:10px;position:relative;">
-          <input type="file" style="display:none" name="picture" #uploadPic (change)="upload($event)"/>
+          <input type="file" style="display:" name="picture" #uploadPic (change)="upload($event)"/>
 
            <input  *ngIf="!showCondimentGroup" [disabled]="!f.valid"	 type="submit" class="submit"
 					   style="position:absolute;right:10px;top:30px;" value="Save"/>

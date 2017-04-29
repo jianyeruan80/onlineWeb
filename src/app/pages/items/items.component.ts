@@ -298,30 +298,38 @@ show(pic,name):void{
           reader.onload = function(e) {
           var dataURL = reader.result;
           //this.elementRef.nativeElement.querySelector('div');
+          console.log(dataURL)
           pic.src=dataURL;
 }
 reader.readAsDataURL(file);
 this.myService.upload("/uploadPic",file,name).subscribe(
                data=> {if(!!data && !!data.key){
-                  
+                 if(this.showPicId=="picture"){
+                     this.item["picture"]=data.value;
+                  }else{
+
+
                  for(let i=0;i<this.categoryOp["options"].length;i++){
                    	    	let id=this.categoryOp["options"][i]["_id"] || this.categoryOp["options"][i]["key"];
                    	    	if(this.showPicId=="picture"+id){
                    	    		this.categoryOp["options"][i]["picture"]=data.value;
-                   	    	   console.log(this.categoryOp);
+                   	    	   
+                            this.uploadPic.nativeElement.value = "";
                    	    		break;
 
                    	    	}
                    	    }
-                   	         for(let i=0;i<this.itemOp["options"].length;i++){
+                   	    for(let i=0;i<this.itemOp["options"].length;i++){
                    	    	let id=this.itemOp["options"][i]["_id"] || this.itemOp["options"][i]["key"];
                    	    	if(this.showPicId=="picture"+id){
                    	    		this.itemOp["options"][i]["picture"]=data.value;
-                   	    	     console.log(this.itemOp["options"]);
+                   	    	     
+                              this.uploadPic.nativeElement.value = "";
                    	    		break;
 
                    	    	}
                    	    }
+                      }
                	
                	}}
                	

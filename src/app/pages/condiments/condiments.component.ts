@@ -114,16 +114,22 @@ export class CondimentsComponent implements OnInit {
     }}
    );
   }
- upload(event): void {
+ upload(event): void 
+ {
+ 
   this.show(this.showPic,event.target.name);
 }
 show(pic,name):void{
+ 
  let file = this.uploadPic.nativeElement.files[0];
+ 
+          if (file.type.indexOf("image")!=-1) {
           var reader = new FileReader();
           reader.onload = function(e) {
           var dataURL = reader.result;
-          //this.elementRef.nativeElement.querySelector('div');
           pic.src=dataURL;
+      
+
 }
 reader.readAsDataURL(file);
 this.myService.upload("/uploadPic",file,name).subscribe(
@@ -132,7 +138,10 @@ this.myService.upload("/uploadPic",file,name).subscribe(
                    	    	let id=this.condiment["options"][i]["_id"] || this.condiment["options"][i]["key"];
                    	    	if(this.showPicId=="picture"+id){
                    	    		this.condiment["options"][i]["picture"]=data.value;
-                   	    		console.log(this.condiment);
+                            
+                            this.uploadPic.nativeElement.value = "";
+
+                   	    		
                    	    		break;
 
                    	    	}
@@ -141,11 +150,13 @@ this.myService.upload("/uploadPic",file,name).subscribe(
                	
                  
                );
+               }
 
   }
 uploadPicture(event){
-	  this.showPic=event.target;
-	  this.showPicId=event.target.id;
-      this.uploadPic.nativeElement.click();
+     this.uploadPic.nativeElement.click();
+     this.showPic=event.target;
+	   this.showPicId=event.target.id;
+      
   }
 }
