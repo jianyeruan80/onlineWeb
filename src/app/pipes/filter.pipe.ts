@@ -9,6 +9,21 @@ export class FilterPipe implements PipeTransform {
     if (!value) return value;
 
      switch (args[0]) {
+      
+       case "GloGroup":
+       var opStr="";
+       
+       for(let i=0;i< args[1].length;i++){
+          if(value.toString().indexOf(args[1][i]["_id"])!=-1){
+             opStr+=args[1][i].group+" , "
+          }
+       }
+        // let str="";
+         /* for(let i=0;i<value.length;i++){
+              str+=value[i]["group"]+" , "
+          }*/
+       return opStr ;
+       
       case "OpGroup":
           let str="";
           for(let i=0;i<value.length;i++){

@@ -1,0 +1,23 @@
+<div class="mask" *ngIf="!!appGlobal.isSelect" >
+</div>
+
+<div class="mask-flex flex-center flex-column psr" style="z-index:999999" *ngIf="!!appGlobal.isSelect"> 
+		<div style="line-height:0;width:50vh;text-align:center;position:relative;" class="bg-green">
+		<h1>Global Option</h1>
+		 <i class="fa fa-times mask-close"  (click)="appGlobal.isSelect=false;" aria-hidden="true"></i>
+		</div>
+		<div style="background-color:#ccc;height:60vh;width:50vh;position:relative;" class="ofy row-child ">
+					<div class="px40" *ngFor="let item of childValue;let i=index;">
+					 <input type="checkbox" id="{{item._id}}" name="checkbox"  class="el-opacity" 
+					 [(ngModel)]="item['key']"
+					  value="{{item._id}}">
+						   <label for="{{item._id}}" style="width:100%;display:inline-block;">{{item.name}}</label>
+					</div>
+					
+		</div>
+		<div style="width:50vh;text-align:center;padding-top:5px;background-color:#666;" class="bg-white px50">
+		<input  	(click)="ok()" type="submit" class="submit"
+					  value="Save"/>
+		 
+		</div>
+</div>

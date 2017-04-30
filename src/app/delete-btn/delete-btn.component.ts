@@ -14,14 +14,9 @@ export class DeleteBtnComponent implements OnInit {
 	this.deleteBnt = new EventEmitter<any>();
   //this.childValue= new EventEmitter<any>();
   }
-
-  ngOnInit() {
-  	 //  this.broadcastDel.subscribe((event) => this.fc=event);
-  }
+  ngOnInit() { }
   ok(n){
-      
-      
-      if(n==false){
+       if(n==false){
         this.deleteBnt.emit(n);
       }else{
           this.deleteBnt.emit(this.childValue);  
@@ -29,9 +24,5 @@ export class DeleteBtnComponent implements OnInit {
 
 
    }
-stop(event){
- //   alert("OK")
-   // event.stopPropagation();
-
-  }
+stop(event){}
 }

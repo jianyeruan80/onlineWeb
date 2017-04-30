@@ -26,19 +26,26 @@ export class ItemsComponent implements OnInit {
    item:Object={};
    items:any=[];
    itemOp={}; 
-   delSign:String="";
+   /*delSign:String="";*/
+
+  	modalCondiments:boolean=false;
+  
    childValue:any; 
     @ViewChild('uploadPic') uploadPic:ElementRef;
     showPic:ElementRef;
     showPicId:String;
-
+	condiments:any=[];
+	properties:any=[];
 constructor(private myService:MyServiceService) { 
-
+	this.properties.push({"name":"Recomment","key":false});
+	this.properties.push({"name":"Spicy","key":false});
 }
  ngOnInit() {
   	this.getCategories();
   	 this.init();
      this.initItemOp();
+     this.getCondiments();
+
     }
     init(){
      this.categoryOp={};
@@ -174,6 +181,7 @@ constructor(private myService:MyServiceService) {
   }
   addItem(){
     this.item={};
+    this.item["properties"]={};
     this.initItemOp();
     this.modalItem=true;
   }
@@ -182,10 +190,12 @@ constructor(private myService:MyServiceService) {
   }
   selectItem(item){
       this.item=JSON.parse(JSON.stringify(item));
+      //this.item["properties"]= {};
       this.initItemOp();
       this.modalItem=true;
   }
   saveItem(){
+      console.log(this.item)
       
       if(!!this.item["_id"]){
       
@@ -247,10 +257,61 @@ constructor(private myService:MyServiceService) {
              
                  })
    }
+     deleteItem(item){
+
+     this.myService.service("/items/"+item["_id"],"delete").subscribe(
+               data=> {
+                   if(!!data){
+                   	   this.appGlobal.isDel=false;
+                       //this.initItemOp();
+                       this.item={};
+
+                  }
+             
+                 })
+   }
    deleteItemOp(i){
     this.itemOp['options'].splice(i,1);
    }
-
+    selectBnt(n){
+    	if(this.appGlobal.currentPage=="Cat"){
+    			this.category["globalOptions"]=n;
+    			this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
+               data=> {
+                   if(!!data){
+                   	this.category=data;
+                    this.appGlobal.isSelect=false;
+                   for(let i=0;i<this.categories.length;i++){
+                         if(this.categories[i]["_id"]==data["_id"]){
+                           this.categories[i]=data;
+                           break;
+                         }  
+                      }
+                   }
+                 }
+                
+            )
+    	}else{
+    		
+    		this.item["globalOptions"]=n;
+    		this.myService.service("/items/"+this.item["_id"],"put",this.item).subscribe(
+               data=> {
+                   if(!!data){
+                   	this.item=data;
+                           this.appGlobal.isSelect=false;
+                   for(let i=0;i<this.items.length;i++){
+                         if(this.items[i]["_id"]==data["_id"]){
+                           this.items[i]=data;
+                           break;
+                         }  
+                      }
+                   }
+                 }
+                
+            )
+    	}
+    	
+    }
     deleteBnt(n){
     
     if(n==false && n!==0){
@@ -263,15 +324,15 @@ constructor(private myService:MyServiceService) {
 
          if(isNaN(n)){
     	
-    	 	 if(this.delSign=="Cat"){
+    	 	 if(this.appGlobal.currentPage=="Cat"){
     	 	 	this.deleteCat(n);		
     	 	 }else{
-
+    	 	 	this.deleteItem(n);	
     	 	 }
     	 	 
     	 }else{
     	 	
-    	 	if(this.delSign=="CatOp"){
+    	 	if(this.appGlobal.currentPage=="CatOp"){
     	 		this.deleteOpGroup(n);		
     	 	}else{
     	 		this.deleteItemGroupOp(n);
@@ -282,10 +343,15 @@ constructor(private myService:MyServiceService) {
    
     
   }
-  delete(item,sign){
-  	
-  	this.delSign=sign;
-    this.childValue=item;
+  delete(item){
+  	var event = window.event;
+  	if (event.stopPropagation) {
+      event.stopPropagation();
+    }  else {
+      event.cancelBubble = true;
+    }
+  
+  	this.childValue=item;
     this.appGlobal.isDel=true;
    }
 
@@ -297,8 +363,6 @@ show(pic,name):void{
           var reader = new FileReader();
           reader.onload = function(e) {
           var dataURL = reader.result;
-          //this.elementRef.nativeElement.querySelector('div');
-          console.log(dataURL)
           pic.src=dataURL;
 }
 reader.readAsDataURL(file);
@@ -341,5 +405,43 @@ uploadPicture(event){
 	  this.showPic=event.target;
 	  this.showPicId=event.target.id;
       this.uploadPic.nativeElement.click();
+  }
+  selectCatCondiment(item){
+  this.appGlobal.isSelect=true;
+	for(let i=0;i<this.condiments.length;i++){
+		this.condiments[i]["name"]=this.condiments[i]["group"];
+		if(item["globalOptions"].toString().indexOf(this.condiments[i]["_id"])!=-1){
+			this.condiments[i]["key"]=true;
+		}else{
+			this.condiments[i]["key"]=false;	
+		}
+		
+	}
+  }
+   selectItemCondiment(item){
+  	this.appGlobal.isSelect=true;
+  	let opStr="";
+  	if(!!item["globalOptions"]){
+  	opStr=item["globalOptions"].toString();	
+  	}
+  	
+	for(let i=0;i<this.condiments.length;i++){
+		this.condiments[i]["name"]=this.condiments[i]["group"];
+		if(opStr.indexOf(this.condiments[i]["_id"])!=-1){
+			this.condiments[i]["key"]=true;
+		}else{
+			this.condiments[i]["key"]=false;	
+		}
+		
+	}
+  }
+  getCondiments(){
+  		this.myService.service("/globalOptionGroups/merchantId","get").subscribe(
+               data=> {
+                   if(!!data){
+
+                   	this.condiments=data;
+    }}
+   );
   }
 }

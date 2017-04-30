@@ -40,6 +40,7 @@ import { CategoryComponent } from './pages/category/category.component';
 import { CondimentsComponent } from './pages/condiments/condiments.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { DeleteBtnComponent } from './delete-btn/delete-btn.component';
+import { SelectCheckboxComponent } from './select-checkbox/select-checkbox.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { DeleteBtnComponent } from './delete-btn/delete-btn.component';
     CondimentsComponent,
     MenusComponent,
     ItemsComponent,
-    DeleteBtnComponent
+    DeleteBtnComponent,
+    SelectCheckboxComponent
     
     
   ],

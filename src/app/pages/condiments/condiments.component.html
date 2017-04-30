@@ -1,6 +1,6 @@
 <app-delete-btn (deleteBnt)="deleteBnt($event)" [childValue]="childValue" ></app-delete-btn>
 <div class="w100 h100 flex-row">
-		<div class="flex flex-column" style="flex:0 0 220px;">
+		<div class="flex flex-column" style="flex:0 1 210px;">
 			  <div class="px40 flex-row bg-blue">
 			  		<div class="flex ta-center"><b>Condiments</b></div>
 			  		<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px"  (click)="isSelect=-1;init()"></div>
@@ -19,7 +19,7 @@
 		<div class="flex flex-column" >
 					<form  #f="ngForm"
           (ngSubmit)="save()" class="w100" style="margin-top:10px;position:relative;">
-          <input type="file" style="display:" name="picture" #uploadPic (change)="upload($event)"/>
+          <input type="file" style="display:none" name="picture" #uploadPic (change)="upload($event)"/>
 
            <input  *ngIf="!showCondimentGroup" [disabled]="!f.valid"	 type="submit" class="submit"
 					   style="position:absolute;right:10px;top:30px;" value="Save"/>
@@ -70,6 +70,14 @@
 							                  <label><i class="fa fa-trash"  style="color:#AD1457" aria-hidden="true"></i></label> 
 											</div>
 								</div>	 
+									<div style="flex:0 1 25%;height:55px;line-height:55px">
+											<div class="row">
+											<img class="img va-bottom" src="{{appGlobal.picUrl}}{{item.picture}}" width="40" height="35" (click)="uploadPicture($event)"  id="picture{{item._id || item['key']}}"  style="border-radius:6px;" />
+								             <!--  <img  src="item.picture"  name="picture{{item._id || item['key']}}" />
+
+							                  <label>picture</label>  -->
+											</div>
+								</div>
 							   <div style="flex:0 1 25%;height:55px;">
 											<div class="row">
 								              <input placeholder=" " [(ngModel)]=item.name  required="" name="name{{item._id || item['key']}}" />
@@ -82,14 +90,7 @@
 							                  <label>price</label> 
 											</div>
 								</div>
-								<div style="flex:0 1 25%;height:55px;">
-											<div class="row">
-											<img class="img va-center" src="{{appGlobal.picUrl}}{{item.picture}}" width="50" height="50" (click)="uploadPicture($event)"  id="picture{{item._id || item['key']}}"  style="border-radius:6px;" />
-								             <!--  <img  src="item.picture"  name="picture{{item._id || item['key']}}" />
-
-							                  <label>picture</label>  -->
-											</div>
-								</div>
+							
 								<div style="flex:1;height:55px;">
 											<div class="row">
 								              <input placeholder=" " [(ngModel)]=item.order  name="order{{item._id || item['key']}}" />

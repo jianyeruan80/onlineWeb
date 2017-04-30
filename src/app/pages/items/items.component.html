@@ -1,14 +1,16 @@
 <app-delete-btn (deleteBnt)="deleteBnt($event)" [childValue]="childValue" ></app-delete-btn>
+<app-select-checkbox  [childValue]=condiments (selectBnt)="selectBnt($event)"></app-select-checkbox>
 <div class="w100 h100 flex-row">
-		<div class="flex flex-column" style="flex:0 0 220px;">
+		<div class="flex flex-column" style="flex:0 1 210px;">
 			  <div class="px40 flex-row bg-blue">
 			  		<div class="flex ta-center"><b>Categories</b></div>
 			  		<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px"  (click)="isSelectCat=-1;selectCat({})"></div>
               </div>
 			  <div class="flexy ofy row-child">
 					  <div [ngClass]="{'px40 flex-row':true,'row-select':isSelectCat==i}" *ngFor="let item of categories;let i=index;" (click)="isSelectCat=i;selectCat(item)" >
-					  			<div class="flex">{{item.name}}</div>
-					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" (click)="delete(item,'Cat')" 
+					  			<div class="flex" style="overflow:hidden;" title="{{item.name}}">{{item.name}}</div>
+					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" 
+					  		(click)="appGlobal.currentPage='Cat';delete(item)" 
 					  		style="padding:0 10px 0 5px"></div>
 					  </div>
 			
@@ -30,17 +32,19 @@
 						                  <label>Group Name</label> 
 										</div>
 							</div>
-							<div style="flex:0 1 25%;height:55px;" >	
-										<div class="row">
-							              <input type="Number" step="1" placeholder=" " [(ngModel)]=category.globalOptions  name="globalOptions" />
-						                  <label>globalOptions</label> 
-										</div>
-							</div>
+						
 							<div style="flex:0 1 25%;height:55px;" >
 										<div class="row">
 							              <input  placeholder=" " [ngModel]="category.customerOptions |filter:['OpGroup']"  name="customerOptions" 
 							               (click)="modal=true;selectCat(category)"  />
-						                  <label>customerOptions </label> 
+						                  <label>Customer Options </label> 
+										</div>
+							</div>
+								<div style="flex:0 1 25%;height:55px;" >	
+										<div class="row"  *ngIf="!!category['_id']">
+							              <input readonly="" placeholder=" "   [ngModel]="category.globalOptions |filter:['GloGroup',condiments]"
+							                name="globalOptions" (click)="appGlobal.currentPage='Cat';selectCatCondiment(category)" />
+						                  <label>Condiment</label> 
 										</div>
 							</div>
 
@@ -51,15 +55,35 @@
 
 					
 				
-	 <div class="bg-green px40 flex-row" style="margin-top: 10px">
-		 	<div style="margin-right:auto">name</div> <div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px" (click)="addItem()"></div>
+	 <div class="bg-green px40 flex-row" style="margin-top: 10px;padding:0 5px" *ngIf="!!category['_id']">
+		 	<div style="flex:0 0 240px">NAME</div> 
+		 	<div style="flex:0 0 80px">PRICE</div> 
+		 	
+		 	<div style="margin-right:auto">OPTION</div>
+		 	<div style="margin-right:auto">CONDIMENT</div>
+		 	<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" 
+		 	style="font-size:1.3rem;flex:0 0 120px;" (click)="addItem()">&nbsp;(Add)</div>
 		 </div>	
 			
-	<div  class="flexy ofy flex-column w100 row-child" *ngIf="!!category['_id']">
+	<div  class="flexy ofy flex-column w100 row-child" >
 		 
 		
-		<div *ngFor="let item of category['itemsDoc'];let i=index;" (click)="selectItem(item)" class="px40">
-			{{item.name}}
+		<div *ngFor="let item of category['itemsDoc'];let i=index;" (click)="selectItem(item)" class="px40 flex-row" style="padding-right:5px">
+			<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" (click)="appGlobal.currentPage='Item';delete(item)" 
+					  		style="padding:0 10px 0 5px"></div>
+			<div style="flex:0 0 200px;">{{item.name}}</div>
+
+			<div  style="flex:0 0 80px;text-align:right;">${{item.price}}&nbsp;</div>
+			<div  style="flex:1 0 0;">&nbsp;&nbsp;{{item.customerOptions |filter:['OpGroup']}}</div>
+			<div  style="flex:1 0 0;">&nbsp;&nbsp;{{item.globalOptions |filter:['GloGroup',condiments]}}</div>
+			<div style="flex:0 0 120px;">
+
+			<img class="img va-center" src="{{appGlobal.picUrl}}{{item.picture}}" width="40" height="35" (click)="uploadPicture($event)"  id="picture"  style="border-radius:6px;" />&nbsp;
+			
+			 <img class="img va-center" src="/assets/img/spicy{{!!item.properties['Spicy']}}.jpg" width="35" height="35">
+
+			  <i class="fa fa-thumbs-up" style="color:red;font-size:20px" aria-hidden="true" [ngClass]="{'dsh':!item.properties['Recomment']}"></i>&nbsp;	
+			</div>
 		</div>
 	</div>
 		
@@ -81,7 +105,7 @@
 			 <div class="flexy ofy row-child" *ngIf="!!category['customerOptions']">
 					  <div [ngClass]="{'px40 flex-row':true,'row-select':isSelectOpGroup==i}" *ngFor="let cat of category['customerOptions'];let i=index;" >
 					  			<div class="flex" (click)="isSelectOpGroup=i;selectCatOp(cat)">{{cat.group}}</div>
-					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" (click)="delete(i,'CatOp')" 
+					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" (click)="appGlobal.currentPage='CatOp';delete(i)" 
 					  		style="padding:0 10px 0 5px"></div>
 					  </div>
 			
@@ -141,6 +165,11 @@
 							                  <label><i class="fa fa-trash"  style="color:#AD1457" aria-hidden="true"></i></label> 
 											</div>
 								</div>	 
+								<div style="flex:0 0 60px;height:55px;line-height:55px">
+											<div class="row">
+								              <img class="img va-bottom" src="{{appGlobal.picUrl}}{{op.picture}}" width="40" height="35" (click)="uploadPicture($event)"  id="picture{{op._id || op['key']}}"  style="border-radius:6px;" />
+											</div>
+								</div>
 							   <div style="flex:0 1 25%;height:55px;">
 											<div class="row">
 								              <input placeholder=" " [(ngModel)]=op.name  required="" name="name{{op._id || op['key']}}" />
@@ -153,11 +182,7 @@
 							                  <label>price</label> 
 											</div>
 								</div>
-								<div style="flex:0 1 25%;height:55px;">
-											<div class="row">
-								              <img class="img va-center" src="{{appGlobal.picUrl}}{{op.picture}}" width="50" height="50" (click)="uploadPicture($event)"  id="picture{{op._id || op['key']}}"  style="border-radius:6px;" />
-											</div>
-								</div>
+						
 								<div style="flex:1;height:55px;">
 											<div class="row">
 								              <input placeholder=" " [(ngModel)]=op.order  name="order{{op._id || op['key']}}" />
@@ -183,40 +208,68 @@
 		<div  class="psr w90 h90 bg-white bdr8 flex-column" >
               <i class="fa fa-times mask-close"  (click)="modalItem=false;closeItem()" aria-hidden="true"></i>
 <form  #f="ngForm"
-          (ngSubmit)="saveItem()">
+          (ngSubmit)="saveItem()" style="height:150px;">
           <input type="file" style="display:none" name="picture" #uploadPic (change)="upload($event)"/>	 
            <input   [disabled]="!f.valid"	 type="submit" class="submit"
-					     style="position:absolute;right:20px;top:3px;" value="Save"/>
+					     style="position:absolute;right:20px;top:4px;" value="Save"/>
 				<div class="px50 bg-white ta-center bdr8" style="background:#eee">
 						<h1 style="margin:0;padding:0">Item info</h1>
 				</div>
 					  <div class="flex-row">
-					 		 <div style="flex:0 1 25%;height:55px;">
-											<div class="row">
-								              <img class="img va-center" src="{{appGlobal.picUrl}}{{item.picture}}" width="50" height="50" (click)="uploadPicture($event)"  id="picture"  style="border-radius:6px;" />
+					 		 <div style="flex:1 1 55px;height:55px;line-height:55px">
+											<div class="row va-bottom">
+								              <img class="img va-bottom" src="{{appGlobal.picUrl}}{{item.picture}}" width="40" height="35" (click)="uploadPicture($event)"  id="picture"  style="border-radius:6px;" />
 											</div>
 								</div>
 
-					 		 <div style="flex:0 1 25%;height:55px;" >
+					 		 <div style="flex:1 1 25%;height:55px;" >
 												<div class="row">
 									              <input placeholder=" " [(ngModel)]=item.name  name="name" required />
 								                  <label>Name</label> 
 												</div>
 									</div>
-									<div style="flex:0 1 25%;height:55px;" >
+									<div style="flex:1 0 80px;height:55px;" >
 												<div class="row">
 									              <input type="Number" step="0.01" placeholder=" " [(ngModel)]=item.price  name="price" required />
 								                  <label>price</label> 
 												</div>
 									</div>
-								<!-- 	<div style="flex:0 1 25%;height:55px;" >
-												<div class="row">
-									             <input type="Number" step="0.01"  placeholder=" " [(ngModel)]=item.oldPrice  name="oldPrice" required />
-								                  <label>oldPrice</label> 
+									<div style="flex:1 0 120px;height:55px;" >
+										<div class="row">
+									              <input type="Number" step="0.01" placeholder=" " [(ngModel)]=item.originPrice  name="originPrice"  />
+								                  <label>Origin Price</label> 
+										</div>
+									</div>
+								 <div style="height:55px;">
+									<div class="row-other flex-row" style="height:50px;align-items:flex-end;justify-content:center;" >
+						             
+						             <ng-container *ngFor="let pro of properties;let i=index;">
+										
+										 <input type="checkbox" id="{{pro.name}}" name="checkbox"
+										   [checked]="item.properties[pro.name]" (change)="item.properties[pro.name] = $event.target.checked" class="el-opacity" >
+						                 <label for="{{pro.name}}">{{pro.name}}</label>&nbsp;&nbsp;&nbsp;&nbsp;
+								 </ng-container>
+				
+									</div>
+								</div>
+									<div style="flex:1 1 30%;height:55px;" >
+												<div class="row" *ngIf="!!item['_id']">
+									                <input  readonly="" placeholder=" " [ngModel]="item.globalOptions |filter:['GloGroup',condiments]"
+							                name="globalOptions" (click)="appGlobal.currentPage='Item';selectItemCondiment(item)" />
+						                  <label>Condiment</label>
 												</div>
-									</div> -->
+									</div>
+
 
 			  </div>
+			   <div class="flex-row">
+			   	<div style="flex:1;height:55px;" >
+								<div class="row">
+									              <input placeholder=" " [(ngModel)]=item.description  name="description" />
+								                  <label>Description</label> 
+												</div>
+									</div>
+			    </div>
 </form>	
                   
  <div style="flex:1;margin-top:20px" *ngIf="!!item['_id']"  class="flex-row">
@@ -236,7 +289,7 @@
 			  		  					<div class="flex" (click)="isSelectOpItem=i;selectItemOp(item)">{{item.group}}</div>
 			  		  					
 			  		  					<div class="fa fa-trash fa-1x px40" 
-			  		  					aria-hidden="true" (click)="isSelectOpItem=i;delete(i,'itemOp')" 
+			  		  					aria-hidden="true" (click)="isSelectOpItem=i;appGlobal.currentPage='itemOp';delete(i)" 
 					  		                   style="padding:0 10px 0 5px">
 					  			
 					  		</div>
@@ -255,25 +308,28 @@
 					    <legend  align="right" ><b>Add/Edit Option</b></legend>
 					    <div  class="w100 flex-row">
 					    		 
-						   <div style="flex:0 1 25%;height:55px;" >
+						   <div style="flex:1 1 25%;height:55px;" >
 										<div class="row">
 							              <input placeholder=" " [(ngModel)]=itemOp.group  required name="group" />
 						                  <label>Group Name</label> 
 										</div>
 							</div>
-							<div style="flex:0 1 25%;height:55px;" >
+							<div style="flex:1 1 25%;height:55px;" >
 										<div class="row">
 							              <input type="Number" step="1" placeholder=" " [(ngModel)]=itemOp.minimun  name="minimun" />
 						                  <label>Minimun</label> 
 										</div>
 							</div>
-							<div style="flex:0 1 25%;height:55px;" >
+							<div style="flex:1 1 25%;height:55px;" >
 										<div class="row">
 							              <input type="Number" step="1"  placeholder=" " [(ngModel)]=itemOp.maximun  name="maximun" />
 						                  <label>Maximun </label> 
 										</div>
 							</div>
-							<input type="submit"   [disabled]="!f.valid" class="submit" value="Save"/>
+							<div style="flex:0 1 200px;text-align:right;line-height:55px" >
+								<input type="submit"  [disabled]="!f.valid" class="submit va-bottom" value="Save"/>
+							</div>
+							
 					    </div>
 					  </fieldset>
 
@@ -298,7 +354,12 @@
 								              
 							                  <label><i class="fa fa-trash"  style="color:#AD1457" aria-hidden="true"></i></label> 
 											</div>
-								</div>	 
+								</div>	
+								<div style="flex:0 1 60px;height:55px;line-height:55px">
+											<div class="row va-bottom">
+								              <img class="img va-bottom" src="{{appGlobal.picUrl}}{{op.picture}}" width="40" height="35" (click)="uploadPicture($event)"  id="picture{{op._id || op['key']}}"  style="border-radius:6px;" />
+											</div>
+								</div> 
 							   <div style="flex:0 1 25%;height:55px;">
 											<div class="row">
 								              <input placeholder=" " [(ngModel)]=op.name  required="" name="name{{op._id || op['key']}}" />
@@ -312,11 +373,7 @@
 							                  <label>price</label> 
 											</div>
 								</div>
-								<div style="flex:0 1 25%;height:55px;">
-											<div class="row">
-								              <img class="img va-center" src="{{appGlobal.picUrl}}{{op.picture}}" width="50" height="50" (click)="uploadPicture($event)"  id="picture{{op._id || op['key']}}"  style="border-radius:6px;" />
-											</div>
-								</div>
+								
 								<div style="flex:1;height:55px;">
 											<div class="row">
 								              <input placeholder=" " [(ngModel)]=op.order  name="order{{op._id || op['key']}}" />
