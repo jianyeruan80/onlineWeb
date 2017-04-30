@@ -65,26 +65,24 @@
 					      </legend>
 					      <div  class="w100 flex-row" *ngFor="let item of condiment['options'];let i=index;">
 						    	<div style="flex:0 0 30px;height:55px;" (click)="deleteOp(i)">
-											<div class="row" *ngIf="condiment['options'].length>1">
+										<div class="row" *ngIf="condiment['options'].length>1">
 								              
 							                  <label><i class="fa fa-trash"  style="color:#AD1457" aria-hidden="true"></i></label> 
-											</div>
+										</div>
 								</div>	 
-									<div style="flex:0 1 25%;height:55px;line-height:55px">
+								<div style="flex:0 1 60px;height:55px;line-height:55px;">
 											<div class="row">
 											<img class="img va-bottom" src="{{appGlobal.picUrl}}{{item.picture}}" width="40" height="35" (click)="uploadPicture($event)"  id="picture{{item._id || item['key']}}"  style="border-radius:6px;" />
-								             <!--  <img  src="item.picture"  name="picture{{item._id || item['key']}}" />
-
-							                  <label>picture</label>  -->
-											</div>
+								          
 								</div>
-							   <div style="flex:0 1 25%;height:55px;">
+								</div>
+							   <div style="flex:1;height:55px;">
 											<div class="row">
 								              <input placeholder=" " [(ngModel)]=item.name  required="" name="name{{item._id || item['key']}}" />
 							                  <label>Condiment Name</label> 
 											</div>
 								</div>
-								<div style="flex:0 1 25%;height:55px;">
+								<div style="flex:1;height:55px;">
 											<div class="row">
 								              <input placeholder=" " type="Number" [(ngModel)]=item.price  step="0.01" required="" name="price{{item._id || item['key']}}" />
 							                  <label>price</label> 
