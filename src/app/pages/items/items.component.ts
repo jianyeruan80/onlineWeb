@@ -26,6 +26,7 @@ export class ItemsComponent implements OnInit {
    item:Object={};
    items:any=[];
    itemOp={}; 
+   isFlash=false;
    /*delSign:String="";*/
 
   	modalCondiments:boolean=false;
@@ -165,8 +166,8 @@ constructor(private myService:MyServiceService) {
     }})
   }
   closeItem(){
-
-      this.myService.service("/items/categories/"+this.category["_id"],"get").subscribe(
+  	  if(this.isFlash){
+  	  		this.myService.service("/items/categories/"+this.category["_id"],"get").subscribe(
                data=> {
                    if(!!data){
                     this.category['itemsDoc']=data;
@@ -177,6 +178,8 @@ constructor(private myService:MyServiceService) {
                      }
                    }
     })
+  	  }
+      
    // =
   }
   addItem(){
@@ -190,13 +193,17 @@ constructor(private myService:MyServiceService) {
   }
   selectItem(item){
       this.item=JSON.parse(JSON.stringify(item));
-      //this.item["properties"]= {};
+      
       this.initItemOp();
       this.modalItem=true;
   }
   saveItem(){
-      console.log(this.item)
-      
+      console.log("----------");
+
+      this.item["properties"]["Recomment"]=this.item["properties"]["Recomment"] || false;
+      this.item["properties"]["Spicy"]=this.item["properties"]["Spicy"] || false;
+      this.isFlash=true;
+      console.log(this.item);
       if(!!this.item["_id"]){
       
         this.myService.service("/items/"+this.item["_id"],"put",this.item).subscribe(
@@ -246,7 +253,7 @@ constructor(private myService:MyServiceService) {
      this.itemOp['options'].push({"key":new Date().getTime(),"name":"","price":"","order":"","picture":""});
    }
    deleteItemGroupOp(i){
-   	
+   		this.isFlash=true;
      this.item["customerOptions"].splice(i,1);
      this.myService.service("/items/"+this.item["_id"],"put",this.item).subscribe(
                data=> {
@@ -258,12 +265,13 @@ constructor(private myService:MyServiceService) {
                  })
    }
      deleteItem(item){
-
+this.isFlash=true;
      this.myService.service("/items/"+item["_id"],"delete").subscribe(
                data=> {
                    if(!!data){
                    	   this.appGlobal.isDel=false;
                        //this.initItemOp();
+                       this.closeItem();
                        this.item={};
 
                   }
@@ -274,6 +282,7 @@ constructor(private myService:MyServiceService) {
     this.itemOp['options'].splice(i,1);
    }
     selectBnt(n){
+
     	if(this.appGlobal.currentPage=="Cat"){
     			this.category["globalOptions"]=n;
     			this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
@@ -292,7 +301,7 @@ constructor(private myService:MyServiceService) {
                 
             )
     	}else{
-    		
+    		this.isFlash=true;
     		this.item["globalOptions"]=n;
     		this.myService.service("/items/"+this.item["_id"],"put",this.item).subscribe(
                data=> {

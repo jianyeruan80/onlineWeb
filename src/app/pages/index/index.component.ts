@@ -1,4 +1,4 @@
-import { Component, OnInit,EventEmitter} from '@angular/core';
+import { Component, OnInit,EventEmitter,ViewChild,ElementRef,AfterViewChecked} from '@angular/core';
 import { HomeComponent } from '../home/home.component';
 import {Router}  from '@angular/router';
 import { MyServiceService } from '../../my-service.service';
@@ -12,6 +12,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 })
 export class IndexComponent implements OnInit {
 appGlobal = AppGlobal.getInstance();
+@ViewChild('divHeight') divHeight: ElementRef;
 broadcastDel: EventEmitter<boolean>;
 testList:any=[];
  constructor(private myService:MyServiceService,private router:Router, private storeService: LocalStorageService) { 
@@ -51,6 +52,18 @@ testList:any=[];
   	//this.router.navigate(['/index/about/2',json]);
 
   }
+   ngAfterViewChecked(){
+        let div=this.divHeight.nativeElement.querySelectorAll('.test1');
+        for(let i=0;i<div.length;i++){
+            if(div[i].clientHeight>40){
+                div[i].style.lineHeight=1.3;
+            }
+        }
+        /*console.log(div[0].clientHeight);
+        console.log(div[1].clientHeight);*/
+
+
+   }
 
 
 }

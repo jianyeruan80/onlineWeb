@@ -1,0 +1,10 @@
+@-webkit-keyframes example {
+    from {background-color: red;}
+    to {background-color: yellow;}
+}
+
+/* Standard syntax */
+@keyframes example {
+    from { opacity: 1;transform:scale(3);}
+    to {opacity:0.5;transform: scale(1);}
+}

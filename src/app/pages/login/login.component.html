@@ -1,7 +1,7 @@
 
  <form   #f="ngForm"
-          (ngSubmit)="login()">
- <div class="login ta-center">
+          (ngSubmit)="login()" class="flex-column h100 flex-center">
+ <!-- <div class="login ta-center">
     <img src="{{appGlobal.picUrl}}{{appGlobal.storeInfo.logo}}"  class="logo"/>
        <h1>{{appGlobal.storeInfo.name}}</h1>
        <div class="login-row">
@@ -14,5 +14,31 @@
        <div>
        <input type="submit" class="submit" value="Login"  [disabled]="!f.valid"/>
        </div> 
- </div> 
+ </div>  -->
+ <div>
+
+       <!--    -->
+      <!--  <h1>{{appGlobal.storeInfo.name}}</h1> -->
+       <div class="login-row">
+           <input class="input" type="text" AUTOCOMPLETE="off" [(ngModel)]=loginForm.userName   name="userName" required><label>Username</label> 
+       </div>
+       <div class="login-row">
+                <input class="input" type="password" AUTOCOMPLETE="off" [(ngModel)]=loginForm.password   name="password" required> <label>Password</label>
+       </div>
+
+       <div>
+       <input type="submit" class="submit" value="Login"  [disabled]="!f.valid"/>
+       </div>
+ </div>
+  <a style="position:fixed;top:0;left:10px;text-align:center;width:100%;" class="px45 bg-green" routerLink="/{{appGlobal['store']['qrcUrl']}}"
+  >Back</a>
+
+
+<div style="position:fixed;bottom:0;text-align:center;width:100%;display:flex;line-height:50px;font-size:25px;" class="flex-center va-center bg-green">
+  <a routerLink="/home" class="va-center" style="color:#fff"
+  >Order 
+    <img src="/assets/img/tap.png" class="va-center" style="animation:example 2s infinite;"/>
+  </a>
+  </div>
  </form>
+

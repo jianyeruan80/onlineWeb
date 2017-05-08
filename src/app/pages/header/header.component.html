@@ -1,7 +1,13 @@
  <div  class="header w100 bp0" style="border-bottom:solid #ccc 1px">
           <label for="left">
            <i class="fa fa-bars fa-2x va-center" style="margin-left:8px" aria-hidden="true"></i>
-           <i class="fa fa-sign-out  fa-2x va-center exit" aria-hidden="true" (click)="exit()"></i>
+
+           <i class="fa fa-cart-plus  fa-2x va-center exit" aria-hidden="true" style="position:relative;margin-right:10px" (click)="exit()">
+           	
+           	<div style="position:absolute;top:0;right:0;font-size:14px;
+           	background:red;height:22px;width:22px;line-height:22px;border-radius:50%;color:#fff;
+           	display:flex;overflow:hidden;letter-spacing:-1px" class="flex-center"><b>5</b></div>
+           </i>
            </label> 
          
      </div>

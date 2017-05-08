@@ -1,8 +1,8 @@
-
-/*.nav{
-	border-bottom:solid red 1px;
+html,body{
+	height:100vh;
+	
 }
-*/.nav-header{
+.nav-header{
 background-color:#5DBA9D;line-height:40px;height:40px;font-size:1.4rem;padding:0 5px;
 color:#fff;
 }
@@ -28,16 +28,12 @@ background:#eee !important;
 	color:#FFFF00  !important;
 	font-weight:600;
 }
+.select{
+  background:#666 !important;
+	color:#FFFF00  !important;
+	font-weight:600;
+}
+.select span{
+	color:#fff !important;
+}
 
-/*.xxx{
-	background:red;
-}
-.xxx:nth-child(odd){
-background:#eee !important;
-}
-.vv{
-	background:red;
-}
-.vv:nth-child(odd){
-	background:#eee !important;
-}*/

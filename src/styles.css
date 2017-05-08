@@ -4,6 +4,7 @@
  font-family: "Helvetica Neue", Helvetica, Arial,'STXinwei', Georgia, "Times New Roman", "Microsoft YaHei", "微软雅黑", "华文细黑",serif;
   font-size:16px;
   height:100%;
+
  }
 *{box-sizing: border-box;}
 a:not([href]){
@@ -55,7 +56,7 @@ cursor: hand;
 .h95{ height:95%;}.w95{ width:95%;}
 .h90{ height:90%;}.w90{ width:90%;}
 .h80{ height:80%;}.w80{ width:80%;}
-.left{flex: 0 1 250px;height:100%;padding:0;margin:0; }
+.left{flex: 0 1 100px;height:100%;padding:0;margin:0; }
 .header{flex: 0 0 50px;line-height:50px;height:50px;}
  .content{flex:1;width:100%;}
 .foot{background:pink; border:solid 3px blue;height:50px;}
@@ -399,3 +400,4 @@ height:35px;line-height:35px;font-size:1.3rem;background:#5DBA9D;color:#fff;bord
   background:#EFEBE9 !important;
 }
 .clearfix:after {content: '';display: block;clear: both;}
+

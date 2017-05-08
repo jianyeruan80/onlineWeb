@@ -1,1 +1,38 @@
-xxxxxxxxxxxxxxxxx
+<div style="height:calc(100% - 50px);display:flex;flex-flow:column wrap;  position: absolute;
+         /* top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);*/
+          width: 100%;
+          height:100%;
+          text-align: center;
+          color: #fff;
+          
+          border-radius: .5em;
+          background:
+          linear-gradient(limegreen, transparent), linear-gradient(90deg, skyblue, transparent), linear-gradient(-90deg, coral, transparent);
+          background-blend-mode: screen;">
+     <div style="flex:1;display:flex;" class="flex-center">
+     				<img  src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" height="40vh" />
+     </div>	
+     <div style="line-height:2;width:100%;text-align:center;color:#fff;font-size:20px; 
+
+text-shadow: 0px -1px 0px #858585, 0px 1px 10px rgba(0, 0, 0, 0.6), 0px 6px 1px rgba(0, 0, 0, 0.1), 0px 0px 5px rgba(0, 0, 0, 0.2), 0px 1px 3px rgba(0, 0, 0, 0.3), 0px 3px 5px rgba(0, 0, 0, 0.2), 0px 7px 10px rgba(0, 0, 0, 0.25), 0px 15px 10px rgba(0, 0, 0, 0.2), 0px 25px 15px rgba(0, 0, 0, 0.15);"> 
+
+     	<div  (swipe)="swipe($event)" >{{appGlobal['store']['name']}}</div>
+     	<div  (swipe)="swipe($event)" >646-361-0021</div>
+     	<div (swipe)="test($event)">Address:xxxxxxxxx</div>
+	     </div>
+     <div style="flex:1;display:flex;" class="flex-center" routerLink="/{{appGlobal['store']['qrcUrl']}}/orders">
+            <div><img src="/assets/img/tap.png" style="animation:example 2s  infinite;"></div>
+     </div>	
+	<a style="position:fixed;bottom:0;text-align:center;width:100%;" class="px45 bg-green"
+
+routerLink="/{{appGlobal['store']['qrcUrl']}}/login"
+	>Sign Info Your Account</a>
+</div>
+
+<!-- export class MyHammerConfig extends HammerGestureConfig  {
+  overrides = <any>{
+      'swipe': {velocity: 0.4, threshold: 20} // override default settings
+  }
+} -->

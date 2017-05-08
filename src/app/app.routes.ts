@@ -9,15 +9,18 @@ import { StaffComponent } from './pages/staff/staff.component';
 import { CustomerComponent } from './pages/customer/customer.component';
 import { LicenseComponent } from './pages/license/license.component';
 import { SettingComponent } from './pages/setting/setting.component';
+import { OrdersComponent } from './pages/orders/orders.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { MenusComponent } from './pages/menus/menus.component';
 import { CondimentsComponent } from './pages/condiments/condiments.component';
+import { StoresComponent } from './pages/stores/stores.component';
 import { PageViewComponent } from './page-view/page-view.component';
 
 export const routes: Routes = [
- { path: '', redirectTo: 'index/items', pathMatch: 'full' },
+ 
  { path: 'setting', component: SettingComponent },
-  { path: ':login', component: LoginComponent },
+ { path: ':restaurant', component: HomeComponent },
+  { path: ':restaurant/login', component: LoginComponent },
 /*{path: '/setting/...', name: 'Home', component: HomeComponent}
 {path: '/', redirectTo: ['']},
 {path: '/user/...', name: 'User', component: UserComponent},
@@ -35,7 +38,7 @@ export const routes: Routes = [
  /* { path: 'about', component: AboutComponent },*/
   /*{ path: 'staff', component: StaffComponent },*/
   /*{ path: ':login', component: LoginComponent },*/
-  { path: 'index', component: IndexComponent ,children: [
+  { path: ':restaurant', component: IndexComponent ,children: [
       { path: '', redirectTo: 'store', pathMatch: 'full' },
       { path: 'store', component: StoreComponent },
       { path: 'staff', component: StaffComponent},
@@ -43,10 +46,13 @@ export const routes: Routes = [
       { path: 'license', component:LicenseComponent},
       { path: 'items', component:ItemsComponent},
       { path: 'menus', component:MenusComponent},
-      { path: 'condiments', component:CondimentsComponent}
-
+      { path: 'condiments', component:CondimentsComponent},
+{ path: 'orders', component:OrdersComponent}
         
-    ]}
+    ]},
+      { path: '**', component: StoresComponent },
+     { path: '', redirectTo: ':restaurant', pathMatch: 'full' },
+   
 //  { path: 'home', component: HomeComponent},
   //{ path: 'about', component: AboutComponent},
  /* { path: 'dogs', component: HomeComponent}*/

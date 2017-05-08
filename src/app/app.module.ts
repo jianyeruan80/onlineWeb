@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule,HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -34,13 +34,27 @@ import { LicenseComponent } from './pages/license/license.component';
 import { SettingComponent } from './pages/setting/setting.component';
 import { MenusComponent } from './pages/menus/menus.component';
 import { PageViewComponent } from './page-view/page-view.component';
-import { PagesComponent } from './pages/pages.component';
+
 import { GroupComponent } from './pages/group/group.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { CondimentsComponent } from './pages/condiments/condiments.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { DeleteBtnComponent } from './delete-btn/delete-btn.component';
 import { SelectCheckboxComponent } from './select-checkbox/select-checkbox.component';
+import { OrdersComponent } from './pages/orders/orders.component';
+import { StoresComponent } from './pages/stores/stores.component';
+export class MyHammerConfig extends HammerGestureConfig  {
+  overrides = <any>{
+      'tap': {velocity: 0.4, threshold:10} // override default settings
+      /*'swipe2': {velocity: 0.4, threshold: 20,direction: DIRECTION_HORIZONTAL}*/
+  }
+}
+
+/*  event: 'swipe',
+        threshold: 10,
+        velocity: 0.3,
+        direction: DIRECTION_HORIZONTAL | DIRECTION_VERTICAL,
+        pointers: 1*/
 
 @NgModule({
   declarations: [
@@ -61,14 +75,16 @@ import { SelectCheckboxComponent } from './select-checkbox/select-checkbox.compo
     LicenseComponent,
     SettingComponent,
     PageViewComponent,
-    PagesComponent,
+    
     GroupComponent,
     CategoryComponent,
     CondimentsComponent,
     MenusComponent,
     ItemsComponent,
     DeleteBtnComponent,
-    SelectCheckboxComponent
+    SelectCheckboxComponent,
+    OrdersComponent,
+    StoresComponent
     
     
   ],
@@ -86,7 +102,13 @@ import { SelectCheckboxComponent } from './select-checkbox/select-checkbox.compo
       }) 
     
   ],
-  providers: [AppGlobal, MyServiceService],
+  providers: [AppGlobal, MyServiceService,{ 
+                    provide: HAMMER_GESTURE_CONFIG, 
+                    useClass: MyHammerConfig 
+                } ],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }
+
