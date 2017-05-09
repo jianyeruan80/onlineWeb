@@ -11,10 +11,9 @@ import { AppGlobal } from '../../app-global';
 })
 export class OrdersComponent implements OnInit {
   appGlobal = AppGlobal.getInstance();
-  menus:any=[];
+  
   constructor(private myService:MyServiceService,private router:Router,public aRoute:ActivatedRoute,) { 
-      this.appGlobal["store"]= this.appGlobal["store"] || {};
-      this.appGlobal["menus"]=this.appGlobal["menus"] || {};
+
       	if(!this.appGlobal["store"]["name"]){
   			this.aRoute.params.subscribe(params => {
        
@@ -35,16 +34,9 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
+  	alert(2)
   //+this.appGlobal["store"]["merchantId"]
-        this.myService.service("/items/menus/admin","get").subscribe(
-              data=> {
-                
-                   if(!!data){
-                    this.appGlobal["menus"]=data; 
-                    console.log(data)
-                   }
-                 }
-             )
+  
   	//this.router.navigate(['index',{}] );//{ id:mobile.id }
   }
  // test(e){

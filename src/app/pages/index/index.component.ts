@@ -16,18 +16,17 @@ appGlobal = AppGlobal.getInstance();
 broadcastDel: EventEmitter<boolean>;
 testList:any=[];
  constructor(private myService:MyServiceService,private router:Router, private storeService: LocalStorageService) { 
-     // this.deleteBnt = new EventEmitter<boolean>();
-     this.broadcastDel = new EventEmitter<boolean>();
-  	 this.testList=[
-  	          {"name":"a","age":1},{"name":"a1","age":2},
-  	          {"name":"a3","age":1},{"name":"a4","age":2},
-  	          {"name":"a5","age":1},{"name":"a6","age":2},
-  	          {"name":"a7","age":1},{"name":"a8","age":2}
-  	       ]
+       this.appGlobal["store"]= this.appGlobal["store"] || {};
+      this.appGlobal["menus"]=this.appGlobal["menus"] || {};
+      this.appGlobal['menus'][0]={};
+      this.appGlobal['menus'][0]['items_docs']= [];
+      this.broadcastDel = new EventEmitter<boolean>();
+
    }
 
   ngOnInit() {
-    
+   
+  
     // if(!this.appGlobal.userInfo["accessToken"]){
      // this.router.navigate([this.storeService.get("QRC")]);
     // }
@@ -53,6 +52,7 @@ testList:any=[];
 
   }
    ngAfterViewChecked(){
+     alert(14)
         let div=this.divHeight.nativeElement.querySelectorAll('.test1');
         for(let i=0;i<div.length;i++){
             if(div[i].clientHeight>40){
@@ -60,7 +60,18 @@ testList:any=[];
             }
         }
         /*console.log(div[0].clientHeight);
-        console.log(div[1].clientHeight);*/
+        console.log(div[1].clientHeight);
+    this.myService.service("/items/menus/admin","get").subscribe(
+              data=> {
+                
+                   if(!!data){
+                    this.appGlobal["menus"]=data; 
+                    console.log(data)
+                   }
+                 }
+             )
+
+        */
 
 
    }
