@@ -5,8 +5,8 @@
 			  		<div class="flex ta-center"><b>Condiments</b></div>
 			  		<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px"  (click)="isSelect=-1;init()"></div>
               </div>
-			  <div class="flexy ofy row-child">
-					  <div [ngClass]="{'px40 flex-row':true,'row-select':isSelect==i}" *ngFor="let item of condiments;let i=index;" (click)="isSelect=i;select(item)" >
+			  <div class="flexy ofy row-child" ><!-- [dragula]='"first-bag"' [dragulaModel]='condiments' -->
+					  <div [ngClass]="{'px40 flex-row':true,'row-select':isSelect==i}" *ngFor="let item of condiments;let i=index;" (click)="isSelect=i;select(item)"  >
 					  			<div class="flex">{{item.group}}</div>
 					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" (click)="delete(item)" 
 					  		style="padding:0 10px 0 5px"></div>

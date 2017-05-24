@@ -2,6 +2,7 @@ import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { AppGlobal } from '../../app-global';
 import {Router,ActivatedRoute}  from '@angular/router';
 import { MyServiceService } from '../../my-service.service';
+import { DragulaService } from 'ng2-dragula/ng2-dragula';
 @Component({
   selector: 'app-condiments',
   templateUrl: './condiments.component.html',
@@ -18,10 +19,24 @@ export class CondimentsComponent implements OnInit {
    condiments:any=[];
    isSelect:number=-1;
    childValue:any;
-  constructor(private myService:MyServiceService,public elementRef: ElementRef) { }
+  constructor(private myService:MyServiceService,public elementRef: ElementRef,private dragulaService: DragulaService) {
+
+   }
    ngOnInit() {
     	this.getCondiments();
        this.init();
+        //this.dragulaService.drag.subscribe((value) => 
+       // this.onDrag(value.slice(1));
+      //});
+     /* this.dragulaService.drop.subscribe((value) => 
+        this.onDrop(value.slice(1));
+      });
+      this.dragulaService.over.subscribe((value) => 
+        this.onOver(value.slice(1));
+      });
+      this.dragulaService.out.subscribe((value) => 
+        this.onOut(value.slice(1));
+      });*/
     }
   init(){
      this.condiment={};
@@ -35,7 +50,9 @@ export class CondimentsComponent implements OnInit {
   deleteOp(i){
     this.condiment['options'].splice(i,1);
   }
-
+updateOrder(){
+  console.log(this.condiments)
+}
   save(){
   		 if(this.condiment["_id"]){
   	  	  this.myService.service("/globalOptionGroups/"+this.condiment["_id"],"put",this.condiment).subscribe(

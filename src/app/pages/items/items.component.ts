@@ -15,7 +15,7 @@ export class ItemsComponent implements OnInit {
    appGlobal = AppGlobal.getInstance();
    category:Object={};//category["customerOpstion"][0]["options"]
    categories:any=[];
-   isSelectCat:number=-1;
+   
    modal=false;
    modalItem=false;
    isSelectOpGroup=-1;
@@ -26,6 +26,8 @@ export class ItemsComponent implements OnInit {
    item:Object={};
    items:any=[];
    itemOp={}; 
+   itemIndex:number=-1;
+   categoryIndex:number=-1;
    isFlash=false;
    /*delSign:String="";*/
 
@@ -67,15 +69,21 @@ constructor(private myService:MyServiceService) {
                data=> {
                    if(!!data){
                    	this.appGlobal.isDel=false;
-                     for(var i=0;i<this.categories.length;i++){
+                     let tempItems=this.categories[this.categoryIndex].itemsDoc;
+                         data["itemsDoc"]=tempItems;
+                         this.categories[this.categoryIndex]=data;
+                         this.category=data;
+                     /*for(var i=0;i<this.categories.length;i++){
+
                          if(this.categories[i]["_id"]==this.category["_id"]){
+                           
                            this.categories[i]=this.category;
                           
                            this.category=data;
                      
                           break;
                          }  
-                      }
+                      }*/
                    }
                  }
                 
@@ -92,31 +100,33 @@ constructor(private myService:MyServiceService) {
      this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
                data=> {
                    if(!!data){
-                     for(let i=0;i<this.categories.length;i++){
-                         if(this.categories[i]["_id"]==data["_id"]){
-                           this.categories[i]=data;
-                           this.category=data;
-                           this.categoryOp=data["customerOptions"][this.isSelectOpGroup];           
-                            break;
+                    // for(let i=0;i<this.categories.length;i++){
+                        // if(this.categories[i]["_id"]==data["_id"]){
+                         let tempItems=this.categories[this.categoryIndex].itemsDoc;
+                         data["itemsDoc"]=tempItems;
+                         this.categories[this.categoryIndex]=data;
+                         this.category=data;
+                           this.categoryOp=data["customerOptions"][this.isSelectOpGroup];
+
+                            //break;
                          }  
-                      }
-                   }
+                      //}
+                   //}
                  }
                 
             )
    }
    saveCat(){
+     console.log(this.categories[this.categoryIndex].items)
        if(!!this.category["_id"]){
   	  	this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
                data=> {
                    if(!!data){
-                   	 for(let i=0;i<this.categories.length;i++){
-                    		 if(this.categories[i]["_id"]==data["_id"]){
-                    		 	 this.categories[i]=data;
-                    		 	 this.category=data;
-                    		 	  break;
-                    		 }	
-                    	}
+                     let tempItems=this.categories[this.categoryIndex].itemsDoc;
+                     data["itemsDoc"]=tempItems;
+                     this.categories[this.categoryIndex]=data;
+                     this.category=data;
+                   	
      	             }
                  }
                 
@@ -125,7 +135,7 @@ constructor(private myService:MyServiceService) {
   	  		this.myService.service("/categories","post",this.category).subscribe(
                data=> {
                    if(!!data){
-                    this.isSelectCat=this.categories.length;
+                    this.categoryIndex=this.categories.length;
                     this.category=data;
                    	this.categories.push(data);
                 }})
@@ -149,7 +159,7 @@ constructor(private myService:MyServiceService) {
                     		 if(this.categories[i]["_id"]==item["_id"]){
                     		 	 this.categories.splice(i,1);
                     		 	 this.selectCat({})
-                    		 	 this.isSelectCat=-1;
+                    		 	 this.categoryIndex=-1;
                     		 	 break;
                     		 }	
                     	}
@@ -288,6 +298,7 @@ this.isFlash=true;
     			this.myService.service("/categories/"+this.category["_id"],"put",this.category).subscribe(
                data=> {
                    if(!!data){
+                     data['itemsDoc']=this.category['itemsDoc'];
                    	this.category=data;
                     this.appGlobal.isSelect=false;
                    for(let i=0;i<this.categories.length;i++){

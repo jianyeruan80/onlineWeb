@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(private myService:MyServiceService,private router:Router,public aRoute:ActivatedRoute,private storeService: LocalStorageService) { 
   }
   ngOnInit() {
-    this.aRoute.params.subscribe(params => {
-              // this.id = params  // {id: "xxx"}
+/*    this.aRoute.params.subscribe(params => {
+
                 
              this.myService.service("/stores/qrc/"+params.login,"get").subscribe(
               data=> {
@@ -39,18 +39,8 @@ export class LoginComponent implements OnInit {
                  }
              )
 
-/*
-                if(params.login!="xian"){
 
-                  this.router.navigate(['']);
-                }else{
-                    console.log("======================");
-
-
-                  this.storeService.set("QRCURL", params.login);
-                  console.log("======================");
-                }*/
-           });
+           });*/
   }
 
    login(form: any): void{

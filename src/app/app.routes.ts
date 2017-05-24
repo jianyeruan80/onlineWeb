@@ -15,26 +15,10 @@ import { CondimentsComponent } from './pages/condiments/condiments.component';
 import { PageViewComponent } from './page-view/page-view.component';
 
 export const routes: Routes = [
- { path: '', redirectTo: 'index/items', pathMatch: 'full' },
+ { path: '', redirectTo: 'login', pathMatch: 'full' },
  { path: 'setting', component: SettingComponent },
-  { path: ':login', component: LoginComponent },
-/*{path: '/setting/...', name: 'Home', component: HomeComponent}
-{path: '/', redirectTo: ['']},
-{path: '/user/...', name: 'User', component: UserComponent},
-{path: '/404', name: 'NotFound', component: NotFoundComponent},
+  { path: 'login', component: LoginComponent },
 
-{path: '/*path', redirectTo: ['NotFound']}*/
- /*{ path: '', redirectTo: 'login', pathMatch: 'full' },*/
-/*  {
-    path: '', ,
-    component: HomeComponent
-  },*/
-/*  { path: 'setting', component: SettingComponent },
-  { path: 'login', component: LoginComponent },*/
-
- /* { path: 'about', component: AboutComponent },*/
-  /*{ path: 'staff', component: StaffComponent },*/
-  /*{ path: ':login', component: LoginComponent },*/
   { path: 'index', component: IndexComponent ,children: [
       { path: '', redirectTo: 'store', pathMatch: 'full' },
       { path: 'store', component: StoreComponent },

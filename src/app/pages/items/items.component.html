@@ -4,10 +4,10 @@
 		<div class="flex flex-column" style="flex:0 1 210px;">
 			  <div class="px40 flex-row bg-blue">
 			  		<div class="flex ta-center"><b>Categories</b></div>
-			  		<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px"  (click)="isSelectCat=-1;selectCat({})"></div>
+			  		<div class="fa fa-plus fa-1x px40 ac" aria-hidden="true" style="padding:0 10px"  (click)="categoryIndex=-1;selectCat({})"></div>
               </div>
 			  <div class="flexy ofy row-child">
-					  <div [ngClass]="{'px40 flex-row':true,'row-select':isSelectCat==i}" *ngFor="let item of categories;let i=index;" (click)="isSelectCat=i;selectCat(item)" >
+					  <div [ngClass]="{'px40 flex-row':true,'row-select':categoryIndex==i}" *ngFor="let item of categories;let i=index;" (click)="categoryIndex=i;selectCat(item)" >
 					  			<div class="flex" style="overflow:hidden;" title="{{item.name}}">{{item.name}}</div>
 					  		<div class="fa fa-trash fa-1x px40 ac" aria-hidden="true" 
 					  		(click)="appGlobal.currentPage='Cat';delete(item)" 

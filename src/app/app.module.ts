@@ -9,7 +9,7 @@ import { HeaderComponent } from './pages/header/header.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { LoginComponent } from './pages/login/login.component';
 import { IndexComponent } from './pages/index/index.component';
-
+import { DragulaModule } from 'ng2-dragula';
 import { routes } from './app.routes';
 
 import { AppGlobal } from './app-global';
@@ -34,13 +34,14 @@ import { LicenseComponent } from './pages/license/license.component';
 import { SettingComponent } from './pages/setting/setting.component';
 import { MenusComponent } from './pages/menus/menus.component';
 import { PageViewComponent } from './page-view/page-view.component';
-import { PagesComponent } from './pages/pages.component';
+
 import { GroupComponent } from './pages/group/group.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { CondimentsComponent } from './pages/condiments/condiments.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { DeleteBtnComponent } from './delete-btn/delete-btn.component';
 import { SelectCheckboxComponent } from './select-checkbox/select-checkbox.component';
+import { OrdersComponent } from './pages/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -61,14 +62,14 @@ import { SelectCheckboxComponent } from './select-checkbox/select-checkbox.compo
     LicenseComponent,
     SettingComponent,
     PageViewComponent,
-    PagesComponent,
     GroupComponent,
     CategoryComponent,
     CondimentsComponent,
     MenusComponent,
     ItemsComponent,
     DeleteBtnComponent,
-    SelectCheckboxComponent
+    SelectCheckboxComponent,
+    OrdersComponent
     
     
   ],
@@ -77,7 +78,7 @@ import { SelectCheckboxComponent } from './select-checkbox/select-checkbox.compo
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
-    
+    DragulaModule,
    /*RouterModule.forRoot(routes,{ useHash: true }),*/
     RouterModule.forRoot(routes), // <-- installs Router routes, components and servicesRouterModule.forRoot(ROUTES ,{ useHash: true }),]
     LocalStorageModule.withConfig({
