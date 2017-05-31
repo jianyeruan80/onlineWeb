@@ -15,11 +15,11 @@ import { CondimentsComponent } from './pages/condiments/condiments.component';
 import { PageViewComponent } from './page-view/page-view.component';
 
 export const routes: Routes = [
- { path: '', redirectTo: 'login', pathMatch: 'full' },
+ { path: '', redirectTo: ':qrcUrl/admin', pathMatch: 'full' },
  { path: 'setting', component: SettingComponent },
-  { path: 'login', component: LoginComponent },
+  { path: ':qrcUrl/admin', component: LoginComponent },
 
-  { path: 'index', component: IndexComponent ,children: [
+  { path: ':qrcUrl', component: IndexComponent ,children: [
       { path: '', redirectTo: 'store', pathMatch: 'full' },
       { path: 'store', component: StoreComponent },
       { path: 'staff', component: StaffComponent},

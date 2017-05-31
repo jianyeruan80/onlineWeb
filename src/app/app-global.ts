@@ -16,10 +16,10 @@ export class AppGlobal {
     isStaff:String="Staff";
     isDel:boolean =false;
     isSelect:boolean =false;
-    isDebug: boolean = true;
+    isDebug: boolean = false;
     currentPage:String="";
-    server: string = this.isDebug ? "http://192.168.1.100:3999/api" : "http://service520.com:3100/api";
-    picUrl: string = this.isDebug ? "http://192.168.1.100:3999/" : "http://service520.com:3100/";
+    server: string = this.isDebug ? "http://192.168.1.100:3999/api" : "http://service520.com:3999/api";
+    picUrl: string = this.isDebug ? "http://192.168.1.100:3999/" : "http://service520.com:3999/";
     ///apiUrl: string = "/MobileApi/api";
      
     pageSize: number = 10;
